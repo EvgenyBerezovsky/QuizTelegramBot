@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "2YjtImA/Rasb2t/v9HXGRvkFVvbmFykMAMtRaq/L++0iCIhDb1lXGbRXqGjkId3KKmwzzdFoo4AyF8WjsPR78Q==",
+  "success": true,
+  "projectFilePath": "D:\\ITVDN\\SmartTest\\QuizBot\\QuizBot\\QuizBot.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Evgen\\.nuget\\packages\\nettelegrambotapi\\5.3.0\\nettelegrambotapi.5.3.0.nupkg.sha512",
+    "C:\\Users\\Evgen\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
+    "C:\\Users\\Evgen\\.nuget\\packages\\system.text.encodings.web\\6.0.0\\system.text.encodings.web.6.0.0.nupkg.sha512",
+    "C:\\Users\\Evgen\\.nuget\\packages\\system.text.json\\6.0.0\\system.text.json.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

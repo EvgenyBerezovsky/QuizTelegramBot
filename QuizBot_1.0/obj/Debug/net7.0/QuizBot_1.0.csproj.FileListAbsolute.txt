@@ -1,0 +1,17 @@
+D:\ITVDN\SmartTest\QuizBot\QuizBot_1.0\bin\Debug\net7.0\QuizBot_1.0.exe
+D:\ITVDN\SmartTest\QuizBot\QuizBot_1.0\bin\Debug\net7.0\QuizBot_1.0.deps.json
+D:\ITVDN\SmartTest\QuizBot\QuizBot_1.0\bin\Debug\net7.0\QuizBot_1.0.runtimeconfig.json
+D:\ITVDN\SmartTest\QuizBot\QuizBot_1.0\bin\Debug\net7.0\QuizBot_1.0.dll
+D:\ITVDN\SmartTest\QuizBot\QuizBot_1.0\bin\Debug\net7.0\QuizBot_1.0.pdb
+D:\ITVDN\SmartTest\QuizBot\QuizBot_1.0\bin\Debug\net7.0\NetTelegramBotApi.dll
+D:\ITVDN\SmartTest\QuizBot\QuizBot_1.0\obj\Debug\net7.0\QuizBot_1.0.csproj.AssemblyReference.cache
+D:\ITVDN\SmartTest\QuizBot\QuizBot_1.0\obj\Debug\net7.0\QuizBot_1.0.GeneratedMSBuildEditorConfig.editorconfig
+D:\ITVDN\SmartTest\QuizBot\QuizBot_1.0\obj\Debug\net7.0\QuizBot_1.0.AssemblyInfoInputs.cache
+D:\ITVDN\SmartTest\QuizBot\QuizBot_1.0\obj\Debug\net7.0\QuizBot_1.0.AssemblyInfo.cs
+D:\ITVDN\SmartTest\QuizBot\QuizBot_1.0\obj\Debug\net7.0\QuizBot_1.0.csproj.CoreCompileInputs.cache
+D:\ITVDN\SmartTest\QuizBot\QuizBot_1.0\obj\Debug\net7.0\QuizBot_1.0.csproj.CopyComplete
+D:\ITVDN\SmartTest\QuizBot\QuizBot_1.0\obj\Debug\net7.0\QuizBot_1.0.dll
+D:\ITVDN\SmartTest\QuizBot\QuizBot_1.0\obj\Debug\net7.0\refint\QuizBot_1.0.dll
+D:\ITVDN\SmartTest\QuizBot\QuizBot_1.0\obj\Debug\net7.0\QuizBot_1.0.pdb
+D:\ITVDN\SmartTest\QuizBot\QuizBot_1.0\obj\Debug\net7.0\QuizBot_1.0.genruntimeconfig.cache
+D:\ITVDN\SmartTest\QuizBot\QuizBot_1.0\obj\Debug\net7.0\ref\QuizBot_1.0.dll
