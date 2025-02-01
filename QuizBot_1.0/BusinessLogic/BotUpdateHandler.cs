@@ -1,18 +1,16 @@
-﻿using NetTelegramBotApi.Types;
+﻿using NetTelegramBotApi.Requests;
+using NetTelegramBotApi.Types;
 using QuizBot_1._0.Entities;
 using QuizBot_1._0.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading.Tasks;
 using User = QuizBot_1._0.Entities.User;
 
 namespace QuizBot_1._0.BusinessLogic
 {
     public class BotUpdateHandler
     {
+        public event Func<object, NewQuizCreatedEventArgs, Task> NewQuizCreated;
+
         Dictionary<long, Quiz> userQuizState = new();              // ChatId -> текущая викторина
         Dictionary<long, User> userProgressState = new();          // ChatId -> Progress текущего User
         Dictionary<long, QuizState> userCreatedQuizState = new();  // ChatId -> текущая создаваемая викторина
@@ -42,7 +40,7 @@ namespace QuizBot_1._0.BusinessLogic
                     response = "Немає доступних вікторін.";
                     menu = null;
                 }
-                    
+
                 else
                 {
                     if (!userProgressState.ContainsKey(chatId))
@@ -59,7 +57,7 @@ namespace QuizBot_1._0.BusinessLogic
             {
                 userCreatedQuizState[chatId] = new QuizState();
                 response = StartQuizCreation(chatId);
-                menu = null; 
+                menu = null;
             }
             else if (userCreatedQuizState.ContainsKey(chatId))
             {
@@ -145,6 +143,8 @@ namespace QuizBot_1._0.BusinessLogic
                         int correctAnswers = userCorrectAnswers[chatId];
                         float result = (float)correctAnswers / (float)userQuizState[chatId].Questions.Count;
                         userProgressState[chatId].AddScore(DateTime.Now, userQuizState[chatId].Topic, result);
+
+
                         _dataService.AddNewUserOrUpdate(userProgressState[chatId]);
 
 
@@ -154,6 +154,7 @@ namespace QuizBot_1._0.BusinessLogic
                         userQuizState.Remove(chatId);
                         userCorrectAnswers.Remove(chatId);
                         userQuizQuestionState.Remove(chatId);
+                        userProgressState.Remove(chatId);
                     }
                 }
             }
@@ -176,13 +177,12 @@ namespace QuizBot_1._0.BusinessLogic
                     {
                         string badOption = "Невірний ввод. Виберіть опцію в меню.";
                         menu = SendNextNewQuestionOrFinishMenu();
-                        response =$"{badOption} \n Що б ви хотіли зробити далі?";
+                        response = $"{badOption} \nЩо б ви хотіли зробити далі?";
                     }
                 }
             }
             return response;
         }
-
         private InlineKeyboardMarkup GetMainMenu()
         {
 
@@ -215,6 +215,12 @@ namespace QuizBot_1._0.BusinessLogic
             quiz.Questions = state.Questions;
             _dataService.SaveNewQuiz(quiz);
             userCreatedQuizState.Remove(chatId);
+
+            string notificationMessage = $"У нас есть новая викторина! -{quiz.Topic}-\nПроверьте свои знания.";
+
+            var chatIdCollection = _dataService.Users.Where(u => u.ChatId != 0).Select(u => u.ChatId).ToList();
+            OnNewQuizCreated(new NewQuizCreatedEventArgs(chatIdCollection, notificationMessage));
+
             return response;
         }
         private InlineKeyboardMarkup SendNextNewQuestionOrFinishMenu()
@@ -224,8 +230,8 @@ namespace QuizBot_1._0.BusinessLogic
 
 
             kb[0] = new InlineKeyboardButton[2];
-            kb[0][0] = new InlineKeyboardButton { Text = "Next Question", CallbackData = "NextQuestion" };
-            kb[0][1] = new InlineKeyboardButton { Text = "Finish Quiz", CallbackData = "FinishQuiz" };
+            kb[0][0] = new InlineKeyboardButton { Text = "Наступне питання", CallbackData = "NextQuestion" };
+            kb[0][1] = new InlineKeyboardButton { Text = "Закінчити вікторину", CallbackData = "FinishQuiz" };
 
             inlineKeyboard.InlineKeyboard = kb;
             return inlineKeyboard;
@@ -251,7 +257,7 @@ namespace QuizBot_1._0.BusinessLogic
 
             menu = QuizMenu(questionItem);
             string response = $"Вопрос {questionIndex + 1}: {question}";
-            return response;   
+            return response;
         }
         private string ProcessQuizStep(Update update, out InlineKeyboardMarkup menu)
         {
@@ -310,7 +316,7 @@ namespace QuizBot_1._0.BusinessLogic
                         state.Questions[^1].Answer = state.Questions[^1].Options[state.Questions[^1].CorrectOptionIndex];
                         state.CurrentStep = QuizStep.EnterQuestionOrFinish;
                         menu = SendNextNewQuestionOrFinishMenu();
-                        response =  "Що б ви хотіли зробити далі?";
+                        response = "Що б ви хотіли зробити далі?";
                     }
                     else
                     {
@@ -325,7 +331,7 @@ namespace QuizBot_1._0.BusinessLogic
                     }
                     else if (callback == "finishquiz")
                     {
-                        response =  FinishQuizCreation(chatId);
+                        response = FinishQuizCreation(chatId);
                     }
                     else
                     {
@@ -335,6 +341,14 @@ namespace QuizBot_1._0.BusinessLogic
                     break;
             }
             return response;
+        }
+        protected virtual async Task OnNewQuizCreated(NewQuizCreatedEventArgs e)
+        {
+            Func<object, NewQuizCreatedEventArgs, Task> handler = NewQuizCreated;
+            if (handler != null)
+            {
+                handler.Invoke(this, e);
+            }
         }
     }
 }

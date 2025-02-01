@@ -1,16 +1,6 @@
-﻿using NetTelegramBotApi;
-using NetTelegramBotApi.Requests;
-using NetTelegramBotApi.Types;
+﻿using NetTelegramBotApi.Types;
 using QuizBot_1._0.BusinessLogic;
-using QuizBot_1._0.Entities;
 using QuizBot_1._0.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using User = QuizBot_1._0.Entities.User;
 
 namespace QuizBot_1._0.Application
 {
@@ -24,7 +14,19 @@ namespace QuizBot_1._0.Application
             _token = token;
             _telegramService = telegramService;
             _botUpdateHandler = botUpdateHandler;
-           
+            _botUpdateHandler.NewQuizCreated += _botUpdateHandler_NewQuizCreatedAsync;
+        }
+
+        private async Task _botUpdateHandler_NewQuizCreatedAsync(object? sender, Entities.NewQuizCreatedEventArgs e)
+        {
+            List<long> Chats = e.ChatIdCollection.ToList();
+            string notification = e.NotificationMessage;
+
+            foreach (var ch in Chats)
+            {
+                if (ch != 0)
+                await _telegramService.SendMessageAsync(ch, notification);
+            }
         }
 
         /// <summary>

@@ -1,12 +1,6 @@
-﻿using NetTelegramBotApi;
-using NetTelegramBotApi.Requests;
-using NetTelegramBotApi.Types;
-using QuizBot_1._0.Application;
+﻿using QuizBot_1._0.Application;
 using QuizBot_1._0.BusinessLogic;
-using QuizBot_1._0.Entities;
 using QuizBot_1._0.Infrastructure;
-using System.Text;
-using User = QuizBot_1._0.Entities.User;
 
 public class Program
 {
