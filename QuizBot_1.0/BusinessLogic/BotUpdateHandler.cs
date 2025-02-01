@@ -45,7 +45,7 @@ namespace QuizBot_1._0.BusinessLogic
                 {
                     if (!userProgressState.ContainsKey(chatId))
                     {
-                        var userName = message.Chat.Username;
+                        var userName = message.Chat.Username == null ? "Unknown_User" : message.Chat.Username;
                         userProgressState.Add(chatId, new User(chatId, userName));
                     }
                     response = "Виберіть вікторину:";

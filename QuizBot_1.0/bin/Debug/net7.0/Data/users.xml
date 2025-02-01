@@ -2,39 +2,13 @@
 <UserSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Users>
     <User>
-      <ChatId>714146601</ChatId>
-      <UserName>Evgen_Berezovsky</UserName>
-      <Scores>
-        <Score>
-          <Time>2025-02-01T19:35:39.5088117+02:00</Time>
-          <Topic>АРХІТЕКТУРНО-БУДІВЕЛЬНА ВІКТОРИНА</Topic>
-          <Result>0.72727275</Result>
-        </Score>
-        <Score>
-          <Time>2025-02-01T19:36:11.6969744+02:00</Time>
-          <Topic>ЗАЯЧА (КРОЛЯЧА) ВІКТОРИНА</Topic>
-          <Result>0.8181818</Result>
-        </Score>
-        <Score>
-          <Time>2025-02-01T19:37:13.5569596+02:00</Time>
-          <Topic>АРХІТЕКТУРНО-БУДІВЕЛЬНА ВІКТОРИНА</Topic>
-          <Result>0.18181819</Result>
-        </Score>
-        <Score>
-          <Time>2025-02-01T19:40:32.8612698+02:00</Time>
-          <Topic>nhgnxnn</Topic>
-          <Result>0</Result>
-        </Score>
-      </Scores>
-    </User>
-    <User>
       <ChatId>6873636829</ChatId>
-      <UserName>EvgBerez</UserName>
+      <UserName>Unknown_User</UserName>
       <Scores>
         <Score>
-          <Time>2025-02-01T19:38:04.6745473+02:00</Time>
-          <Topic>АРХІТЕКТУРНО-БУДІВЕЛЬНА ВІКТОРИНА</Topic>
-          <Result>0.27272728</Result>
+          <Time>2025-02-01T19:52:48.2848743+02:00</Time>
+          <Topic>ЗАЯЧА (КРОЛЯЧА) ВІКТОРИНА</Topic>
+          <Result>0.72727275</Result>
         </Score>
       </Scores>
     </User>

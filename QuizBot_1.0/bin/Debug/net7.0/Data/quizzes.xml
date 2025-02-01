@@ -253,21 +253,5 @@
         </QuestionItem>
       </Questions>
     </Quiz>
-    <Quiz>
-      <Topic>nhgnxnn</Topic>
-      <Questions>
-        <QuestionItem>
-          <Answer>vbn</Answer>
-          <CorrectOptionIndex>2</CorrectOptionIndex>
-          <Question>vnvv</Question>
-          <Options>
-            <string>vb</string>
-            <string>xvbn</string>
-            <string>vbn</string>
-            <string>vbn</string>
-          </Options>
-        </QuestionItem>
-      </Questions>
-    </Quiz>
   </Quizzes>
 </QuizSet>
