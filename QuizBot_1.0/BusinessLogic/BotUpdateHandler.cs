@@ -2,7 +2,10 @@
 using NetTelegramBotApi.Types;
 using QuizBot_1._0.Entities;
 using QuizBot_1._0.Infrastructure;
+using System.Net;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
+using static System.Net.Mime.MediaTypeNames;
 using User = QuizBot_1._0.Entities.User;
 
 namespace QuizBot_1._0.BusinessLogic
@@ -11,12 +14,14 @@ namespace QuizBot_1._0.BusinessLogic
     {
         public event Func<object, NewQuizCreatedEventArgs, Task> NewQuizCreated;
 
-        Dictionary<long, Quiz> userQuizState = new();              // ChatId -> текущая викторина
-        Dictionary<long, User> userProgressState = new();          // ChatId -> Progress текущего User
-        Dictionary<long, QuizState> userCreatedQuizState = new();  // ChatId -> текущая создаваемая викторина
+        Dictionary<long, ChatCurrentState> userChatCurrentState = new(); // ChatId -> текущее состояние чата
+        Dictionary<long, QuizState> userCreateQuizState = new();         // ChatId -> текущая создаваемая викторина
 
-        Dictionary<long, int> userCorrectAnswers = new();          // ChatId -> правильные ответы
-        Dictionary<long, int> userQuizQuestionState = new();       // ChatId -> текущий вопрос
+        Dictionary<long, Quiz> userQuizState = new();                    // ChatId -> текущая викторина
+        Dictionary<long, User> userProgressState = new();                // ChatId -> Progress текущего User
+
+        Dictionary<long, int> userCorrectAnswers = new();                // ChatId -> правильные ответы
+        Dictionary<long, int> userQuizQuestionState = new();             // ChatId -> текущий вопрос
 
         DataService _dataService;
 
@@ -32,73 +37,31 @@ namespace QuizBot_1._0.BusinessLogic
             string response = string.Empty;
             menu = null;
 
-            // Команда /start
-            if (message.Text == "/start")
+            switch (message.Text)
             {
-                if (_dataService.Quizzes == null || _dataService.Quizzes.Count == 0)
-                {
-                    response = "Немає доступних вікторін.";
-                    menu = null;
-                }
-
-                else
-                {
-                    if (!userProgressState.ContainsKey(chatId))
+                case "/start":
+                    response = GiveResponseToStart(message, chatId, out menu);
+                    break;
+                case "/info":
+                    response = GiveResponseToInfo(update, out menu);
+                    break;
+                case "/create_new":
+                    response = GiveResponseToCreateNew(update, out menu);
+                    break;
+                default:
+                    if (userChatCurrentState[chatId] == ChatCurrentState.NewQuizCreationState && userCreateQuizState.ContainsKey(chatId))
                     {
-                        var userName = message.Chat.Username == null ? "Unknown_User" : message.Chat.Username;
-                        userProgressState.Add(chatId, new User(chatId, userName));
+                        response = ProcessQuizStep(update, out menu);
                     }
-                    response = "Виберіть вікторину:";
-                    menu = GetMainMenu();
-                }
-
-            }
-            else if (message.Text == "/create_new")
-            {
-                userCreatedQuizState[chatId] = new QuizState();
-                response = StartQuizCreation(chatId);
-                menu = null;
-            }
-            else if (userCreatedQuizState.ContainsKey(chatId))
-            {
-                response = ProcessQuizStep(update, out menu);
-            }
-
-            else if (message.Text == "/info")
-            {
-                string info = string.Empty;
-
-                if (_dataService.Users.Count == 0)
-                {
-                    info = "Нет информации";
-                }
-                else
-                {
-                    var sb = new StringBuilder();
-                    foreach (var user in _dataService.Users)
-                    {
-                        sb.AppendLine($"Пользователь {user.UserName}:");
-                        foreach (var score in user.Scores)
-                        {
-                            sb.AppendLine($"Тема: {score.Topic}");
-                            sb.AppendLine($"Балл: {score.Result.ToString("F2")}");
-                            sb.AppendLine($"Время: {score.Time}");
-                            sb.AppendLine(new string('-', 10));
-                        }
-                    }
-
-                    info = sb.ToString();
-                }
-                Console.WriteLine(info);
-                response = info;
+                    break;
             }
             return response;
         }
         public string HandleCallbackQuery(Update update, out InlineKeyboardMarkup menu)
         {
+            menu = null;
             string subresponse;
             string response = string.Empty;
-            menu = null;
 
             var callbackData = update.CallbackQuery.Data;
             var chatId = update.CallbackQuery.Message.Chat.Id;
@@ -106,83 +69,117 @@ namespace QuizBot_1._0.BusinessLogic
 
             if (message.StartsWith("startquiz"))
             {
-                int.TryParse(message.Replace("startquiz", string.Empty), out int quizIndex);
-
-                userQuizState[chatId] = _dataService.Quizzes[quizIndex]; // устанавливаем текущую викторину для текущего чата
-                userQuizQuestionState[chatId] = 0; // Устанавливаем начальный вопрос
-                userCorrectAnswers[chatId] = 0; // Сбрасываем счётчик правильных ответов
-
-                response = $"{userQuizState[chatId].Topic}! \nОсь ваше перше питання: \n{SendNextQuestion(chatId, out menu)}";
+                return GiveResponseToStartQuizCallback(message, chatId, out menu);
             }
-            if (message.StartsWith("/a"))
+            else if (message.StartsWith("/answer"))
             {
-                if (userQuizQuestionState.ContainsKey(chatId))
-                {
-                    int questionIndex = userQuizQuestionState[chatId];
-                    int.TryParse(message.Replace("/a", string.Empty), out int index);
-
-                    // Проверяем правильность ответа
-                    if (userQuizState[chatId].Questions[questionIndex].CorrectOptionIndex == index)
-                    {
-                        userCorrectAnswers[chatId]++;
-                        subresponse = "Вірно!";
-                    }
-                    else
-                    {
-                        subresponse = $"Невірно! Вірна відповідь: {userQuizState[chatId].Questions[questionIndex].Answer}";
-                    }
-
-                    // Переход к следующему вопросу
-                    userQuizQuestionState[chatId]++;
-                    if (userQuizQuestionState[chatId] < userQuizState[chatId].Questions.Count)
-                    {
-                        response = $"{subresponse}\n{SendNextQuestion(chatId, out menu)}";
-                    }
-                    else
-                    {
-                        int correctAnswers = userCorrectAnswers[chatId];
-                        float result = (float)correctAnswers / (float)userQuizState[chatId].Questions.Count;
-                        userProgressState[chatId].AddScore(DateTime.Now, userQuizState[chatId].Topic, result);
-
-
-                        _dataService.AddNewUserOrUpdate(userProgressState[chatId]);
-
-
-                        response = $"Викторина завершена! Ви вірно відповіли на {correctAnswers} из {userQuizState[chatId].Questions.Count} питань.";
-
-                        // Сбрасываем состояние пользователя
-                        userQuizState.Remove(chatId);
-                        userCorrectAnswers.Remove(chatId);
-                        userQuizQuestionState.Remove(chatId);
-                        userProgressState.Remove(chatId);
-                    }
-                }
+                return GiveResponseToAnswerCallback(message, chatId, out menu);
             }
-            else if (userCreatedQuizState.ContainsKey(chatId))
+            else if (userCreateQuizState.ContainsKey(chatId))
             {
-                var state = userCreatedQuizState[chatId];
+                var state = userCreateQuizState[chatId];
                 if (state.CurrentStep == QuizStep.EnterQuestionOrFinish)
                 {
                     if (message == "nextquestion")
                     {
                         state.CurrentStep = QuizStep.EnterQuestion;
-                        response = "Будь ласка, введіть наступне питання:";
+                        return "Будь ласка, введіть наступне питання:";
                     }
                     else if (message == "finishquiz")
                     {
                         menu = null;
-                        response = FinishQuizCreation(chatId);
+                        return GiveResponseToFinishQuizCallback(chatId);
                     }
                     else
                     {
-                        string badOption = "Невірний ввод. Виберіть опцію в меню.";
                         menu = SendNextNewQuestionOrFinishMenu();
-                        response = $"{badOption} \nЩо б ви хотіли зробити далі?";
+                        string badOption = "Невірний ввод. Виберіть опцію в меню.";
+                        return $"{badOption} \nЩо б ви хотіли зробити далі?";
                     }
                 }
             }
+            else if (userChatCurrentState[chatId] == ChatCurrentState.ResultsProcessState && message.ToLower() == "showusersinfo")
+            {
+                response = GiveResponseToShowUserInfoCallback(chatId);
+            }
+            else if (userChatCurrentState[chatId] == ChatCurrentState.ResultsProcessState && message.ToLower() == "cleanusersinfo")
+            {
+                response = GiveResponseToCleanUserInfoCallback(chatId);
+            }
+            else if (userChatCurrentState[chatId] == ChatCurrentState.ResultsProcessState && message.ToLower() == "deletequiz")
+            {
+                response = GiveResponseToDeleteQuizCallback(chatId, out menu);
+            }
+            else if (userChatCurrentState[chatId] == ChatCurrentState.QuizDeletionState && message.StartsWith("deletequiznumber"))
+            {
+                response = GiveResponseToDeleteQuizNumberCallback(chatId, message, out menu);
+            }
+            else if (userChatCurrentState[chatId] == ChatCurrentState.QuizDeletionState && message.ToLower() == "yes")
+            {
+                response = GiveResponseToDeleteQuizNumberYesCallback();
+            }
+            else if (userChatCurrentState[chatId] == ChatCurrentState.QuizDeletionState && message.ToLower() == "no")
+            {
+                response = GiveResponseToDeleteQuizNumberNoCallback();
+            }
+
             return response;
         }
+
+        private string GiveResponseToDeleteQuizNumberNoCallback()
+        {
+            foreach (var quize in _dataService.Quizzes)
+            {
+                if (!quize.IsActive) quize.IsActive = true;
+            }
+            string response = "Видалення скасовано.";
+            return response;
+        }
+
+        private string GiveResponseToDeleteQuizNumberYesCallback()
+        {
+            var quizeToDelete = (from q in _dataService.Quizzes
+                                 where q.IsActive == false
+                                 select q).FirstOrDefault();
+            _dataService.RemoveQuiz(quizeToDelete);
+            string response = "Дані оновлені";
+            return response;
+        }
+
+        private string GiveResponseToDeleteQuizNumberCallback(long chatId, string message, out InlineKeyboardMarkup menu)
+        {
+            menu = GetYesNoMenu();
+
+            int.TryParse(message.Replace("deletequiznumber", string.Empty), out int quizIndex);
+            string response = $"Підтвердження видалення викторини: \n{_dataService.Quizzes[quizIndex].Topic}";
+            _dataService.Quizzes[quizIndex].IsActive = false;
+            Console.WriteLine(_dataService.Quizzes[quizIndex].Topic);
+            return response;
+        }
+
+        private InlineKeyboardMarkup GetYesNoMenu()
+        {
+            var inlineKeyboard = new InlineKeyboardMarkup() { InlineKeyboard = new[] { new[] { new InlineKeyboardButton { Text = "Так", CallbackData = "yes" }, new InlineKeyboardButton { Text = "Ні", CallbackData = "no" } } } };
+            return inlineKeyboard;
+        }
+
+        private string GiveResponseToDeleteQuizCallback(long chatId, out InlineKeyboardMarkup menu)
+        {
+            userChatCurrentState[chatId] = ChatCurrentState.QuizDeletionState;
+            menu = GetDeleteQuizMenu();
+            string response = "Виберіть вікторину для видалення.";
+            return response;
+        }
+
+        private string GiveResponseToCleanUserInfoCallback(long chatId)
+        {
+            //_dataService.Users.Clear();
+            _dataService.CleanUsersData();
+            userChatCurrentState[chatId] = ChatCurrentState.StartState;
+            return "Дані видалено.";
+        }
+
+        #region Created Menu
         private InlineKeyboardMarkup GetMainMenu()
         {
 
@@ -198,30 +195,21 @@ namespace QuizBot_1._0.BusinessLogic
             inlineKeyboard.InlineKeyboard = kb;
             return inlineKeyboard;
         }
-        private string StartQuizCreation(long chatId)
+        private InlineKeyboardMarkup GetDeleteQuizMenu()
         {
-            var newQuizState = userCreatedQuizState[chatId];
-            newQuizState.CurrentStep = QuizStep.EnterTitle;
-            string response = "Давайте створимо нову вікторину! \nБудь ласка, введіть назву вікторини:";
-            return response;
-        }
-        private string FinishQuizCreation(long chatId)
-        {
-            var state = userCreatedQuizState[chatId];
-            string response = $"Quiz '{state.Title}' created with {state.Questions.Count} questions!";
 
-            Quiz quiz = new Quiz();
-            quiz.Topic = state.Title;
-            quiz.Questions = state.Questions;
-            _dataService.SaveNewQuiz(quiz);
-            userCreatedQuizState.Remove(chatId);
+            var inlineKeyboard = new InlineKeyboardMarkup();
+            var kb = new InlineKeyboardButton[_dataService.Quizzes.Count][];
 
-            string notificationMessage = $"У нас есть новая викторина! -{quiz.Topic}-\nПроверьте свои знания.";
-
-            var chatIdCollection = _dataService.Users.Where(u => u.ChatId != 0).Select(u => u.ChatId).ToList();
-            OnNewQuizCreated(new NewQuizCreatedEventArgs(chatIdCollection, notificationMessage));
-
-            return response;
+            for (int i = 0; i < _dataService.Quizzes.Count; i++)
+            {
+                string text = $"{i + 1} - {_dataService.Quizzes[i].Topic.ToString()}";
+                string callbackData = string.Concat("DeleteQuizNumber", i);
+                kb[i] = new InlineKeyboardButton[1];
+                kb[i][0] = new InlineKeyboardButton { Text = text, CallbackData = callbackData };
+            }
+            inlineKeyboard.InlineKeyboard = kb;
+            return inlineKeyboard;
         }
         private InlineKeyboardMarkup SendNextNewQuestionOrFinishMenu()
         {
@@ -240,7 +228,7 @@ namespace QuizBot_1._0.BusinessLogic
         {
             var inlineKeyboard = new InlineKeyboardMarkup();
             var kb = new InlineKeyboardButton[questionItem.Options.Length][];
-            string callbackData = "/a";
+            string callbackData = "/answer";
             for (int i = 0; i < questionItem.Options.Length; i++)
             {
                 kb[i] = new InlineKeyboardButton[1];
@@ -248,6 +236,218 @@ namespace QuizBot_1._0.BusinessLogic
             }
             inlineKeyboard.InlineKeyboard = kb;
             return inlineKeyboard;
+        }
+
+        private InlineKeyboardMarkup GetInfoMenu()
+        {
+
+            var inlineKeyboard = new InlineKeyboardMarkup();
+            var kb = new InlineKeyboardButton[3][];
+
+
+            kb[0] = new InlineKeyboardButton[1];
+            kb[1] = new InlineKeyboardButton[1];
+            kb[2] = new InlineKeyboardButton[1];
+            kb[0][0] = new InlineKeyboardButton { Text = "Перегляд результатів користувачів", CallbackData = "ShowUsersInfo" };
+            kb[1][0] = new InlineKeyboardButton { Text = "Видалення результатів користувачів", CallbackData = "CleanUsersInfo" };
+            kb[2][0] = new InlineKeyboardButton { Text = "Видалення вікторини", CallbackData = "DeleteQuiz" };
+            inlineKeyboard.InlineKeyboard = kb;
+            return inlineKeyboard;
+        }
+        #endregion
+
+        #region GiveResponseToCommand Methods
+
+        private string GiveResponseToInfo(Update update, out InlineKeyboardMarkup menu)
+        {
+            menu = null;
+            string response = "Невірний ввод.";
+            long chatId = update.Message.Chat.Id;
+
+            if (!userChatCurrentState.ContainsKey(chatId)) userChatCurrentState.Add(chatId, ChatCurrentState.StartState);
+            if (userChatCurrentState[chatId] == ChatCurrentState.StartState)
+            {
+                userChatCurrentState[chatId] = ChatCurrentState.ResultsProcessState;
+                menu = GetInfoMenu();
+                response = "Виберіть потрібну дію?";
+            }
+            return response;
+        }
+        private string GiveResponseToShowUserInfoCallback(long chatId)
+        {
+            string response = string.Empty;
+
+            if (_dataService.Users.Count == 0)
+            {
+                response = "Нет информации";
+            }
+            else
+            {
+                var sb = new StringBuilder();
+                foreach (var user in _dataService.Users)
+                {
+                    sb.AppendLine($"Пользователь {user.UserName}:");
+                    foreach (var score in user.Scores)
+                    {
+                        sb.AppendLine($"Тема: {score.Topic}");
+                        sb.AppendLine($"Балл: {score.Result.ToString("F2")}");
+                        sb.AppendLine($"Время: {score.Time}");
+                        sb.AppendLine(new string('-', 10));
+                    }
+                }
+
+                response = sb.ToString();
+            }
+            userChatCurrentState[chatId] = ChatCurrentState.StartState;
+            return response;
+        }
+        private string GiveResponseToCreateNew(Update update, out InlineKeyboardMarkup menu)
+        {
+            menu = null;
+            string response = "Невірний ввод";
+            long chatId = update.Message.Chat.Id;
+
+            if (!userChatCurrentState.ContainsKey(chatId)) userChatCurrentState.Add(chatId, ChatCurrentState.StartState);
+            if (userChatCurrentState[chatId] == ChatCurrentState.StartState)
+            {
+                userChatCurrentState[chatId] = ChatCurrentState.NewQuizCreationState;
+                userCreateQuizState[chatId] = new QuizState();
+                response = StartQuizCreation(chatId);
+            }
+
+
+
+            return response;
+        }
+        private string GiveResponseToStart(Message message, long chatId, out InlineKeyboardMarkup menu)
+        {
+            string response;
+            if (!userChatCurrentState.ContainsKey(chatId))
+            {
+                userChatCurrentState.Add(chatId, ChatCurrentState.StartState);
+            }
+            userChatCurrentState[chatId] = ChatCurrentState.StartState;
+            userQuizState.Remove(chatId);
+            userProgressState.Remove(chatId);
+            userCreateQuizState.Remove(chatId);
+
+            if (_dataService.Quizzes == null || _dataService.Quizzes.Count == 0)
+            {
+                menu = null;
+                response = "Немає доступних вікторін.";
+                return response;
+            }
+
+            else
+            {
+                if (!userProgressState.ContainsKey(chatId))
+                {
+                    var userName = message.Chat.Username == null ? "Unknown_User" : message.Chat.Username;
+                    userProgressState.Add(chatId, new User(chatId, userName));
+                }
+                response = "Виберіть вікторину:";
+                menu = GetMainMenu();
+                return response;
+            }
+        }
+        #endregion
+
+        #region GiveResponseToCallback methods
+        private string GiveResponseToAnswerCallback(string message, long chatId, out InlineKeyboardMarkup menu)
+        {
+            menu = null;
+            string response = string.Empty;
+            string subresponse = string.Empty;
+
+            if (userChatCurrentState[chatId] == ChatCurrentState.QuizPassingState && userQuizQuestionState.ContainsKey(chatId))
+            {
+                int questionIndex = userQuizQuestionState[chatId];
+                int.TryParse(message.Replace("/answer", string.Empty), out int index);
+
+                // Проверяем правильность ответа
+                if (userQuizState[chatId].Questions[questionIndex].CorrectOptionIndex == index)
+                {
+                    userCorrectAnswers[chatId]++;
+                    subresponse = "Вірно!";
+                }
+                else
+                {
+                    subresponse = $"Невірно! Вірна відповідь: {userQuizState[chatId].Questions[questionIndex].Answer}";
+                }
+
+                // Переход к следующему вопросу
+                userQuizQuestionState[chatId]++;
+                if (userQuizQuestionState[chatId] < userQuizState[chatId].Questions.Count)
+                {
+                    response = $"{subresponse}\n{SendNextQuestion(chatId, out menu)}";
+                }
+                else
+                {
+                    int correctAnswers = userCorrectAnswers[chatId];
+                    float result = (float)correctAnswers / (float)userQuizState[chatId].Questions.Count;
+                    userProgressState[chatId].AddScore(DateTime.Now, userQuizState[chatId].Topic, result);
+
+
+                    _dataService.AddNewUserOrUpdate(userProgressState[chatId]);
+
+
+                    response = $"Викторина завершена! Ви вірно відповіли на {correctAnswers} из {userQuizState[chatId].Questions.Count} питань.";
+
+                    // Сбрасываем состояние пользователя
+                    userChatCurrentState[chatId] = ChatCurrentState.StartState;
+                    userQuizState.Remove(chatId);
+                    userCorrectAnswers.Remove(chatId);
+                    userQuizQuestionState.Remove(chatId);
+                    userProgressState.Remove(chatId);
+                }
+
+            }
+            else
+            {
+                response = "Невірний ввод!";
+            }
+            return response;
+        }
+        private string GiveResponseToStartQuizCallback(string message, long chatId, out InlineKeyboardMarkup menu)
+        {
+            int.TryParse(message.Replace("startquiz", string.Empty), out int quizIndex);
+
+            userChatCurrentState[chatId] = ChatCurrentState.QuizPassingState; // устанавливаем текущее состояние чата  
+            userQuizState[chatId] = _dataService.Quizzes[quizIndex];          // устанавливаем текущую викторину для текущего чата
+            userQuizQuestionState[chatId] = 0;                                // Устанавливаем начальный вопрос
+            userCorrectAnswers[chatId] = 0;                                   // Сбрасываем счётчик правильных ответов
+
+            string response = $"{userQuizState[chatId].Topic}! \nОсь ваше перше питання: \n{SendNextQuestion(chatId, out menu)}";
+            return response;
+        }
+        private string GiveResponseToFinishQuizCallback(long chatId)
+        {
+            var state = userCreateQuizState[chatId];
+            string response = $"Quiz '{state.Title}' created with {state.Questions.Count} questions!";
+
+            Quiz quiz = new Quiz();
+            quiz.Topic = state.Title;
+            quiz.Questions = state.Questions;
+            _dataService.SaveNewQuiz(quiz);
+
+            userCreateQuizState.Remove(chatId);
+            userChatCurrentState[chatId] = ChatCurrentState.StartState;
+
+            string notificationMessage = $"У нас есть новая викторина! -{quiz.Topic}-\nПроверьте свои знания.";
+
+            var chatIdCollection = _dataService.Users.Where(u => u.ChatId != 0).Select(u => u.ChatId).ToList();
+            OnNewQuizCreated(new NewQuizCreatedEventArgs(chatIdCollection, notificationMessage));
+
+            return response;
+        }
+        #endregion
+
+        private string StartQuizCreation(long chatId)
+        {
+            var newQuizState = userCreateQuizState[chatId];
+            newQuizState.CurrentStep = QuizStep.EnterTitle;
+            string response = "Давайте створимо нову вікторину! \nБудь ласка, введіть назву вікторини:";
+            return response;
         }
         private string SendNextQuestion(long chatId, out InlineKeyboardMarkup menu)
         {
@@ -264,7 +464,7 @@ namespace QuizBot_1._0.BusinessLogic
             menu = null;
             string response = string.Empty;
             long chatId = update.Message.Chat.Id;
-            var state = userCreatedQuizState[chatId];
+            var state = userCreateQuizState[chatId];
             string input = string.Empty;
             string callback = string.Empty;
             if (update.Message != null)
@@ -331,12 +531,12 @@ namespace QuizBot_1._0.BusinessLogic
                     }
                     else if (callback == "finishquiz")
                     {
-                        response = FinishQuizCreation(chatId);
+                        response = GiveResponseToFinishQuizCallback(chatId);
                     }
                     else
                     {
                         menu = SendNextNewQuestionOrFinishMenu();
-                        response = "What would you like to do next?";
+                        response = "Що б ви хотіли зробити далі?";
                     }
                     break;
             }
@@ -350,5 +550,6 @@ namespace QuizBot_1._0.BusinessLogic
                 handler.Invoke(this, e);
             }
         }
+
     }
 }

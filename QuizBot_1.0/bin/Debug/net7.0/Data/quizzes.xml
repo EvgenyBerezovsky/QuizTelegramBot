@@ -2,6 +2,7 @@
 <QuizSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Quizzes>
     <Quiz>
+      <IsActive>true</IsActive>
       <Topic>АРХІТЕКТУРНО-БУДІВЕЛЬНА ВІКТОРИНА</Topic>
       <Questions>
         <QuestionItem>
@@ -128,6 +129,7 @@
       </Questions>
     </Quiz>
     <Quiz>
+      <IsActive>true</IsActive>
       <Topic>ЗАЯЧА (КРОЛЯЧА) ВІКТОРИНА</Topic>
       <Questions>
         <QuestionItem>

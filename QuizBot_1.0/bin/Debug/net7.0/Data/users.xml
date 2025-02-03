@@ -1,16 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <UserSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Users>
-    <User>
-      <ChatId>6873636829</ChatId>
-      <UserName>Unknown_User</UserName>
-      <Scores>
-        <Score>
-          <Time>2025-02-01T19:52:48.2848743+02:00</Time>
-          <Topic>ЗАЯЧА (КРОЛЯЧА) ВІКТОРИНА</Topic>
-          <Result>0.72727275</Result>
-        </Score>
-      </Scores>
-    </User>
-  </Users>
+  <Users />
 </UserSet>

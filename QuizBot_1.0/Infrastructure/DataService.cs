@@ -54,8 +54,8 @@ namespace QuizBot_1._0.Infrastructure
         private UserSet userSet = new UserSet();
         private QuizSet quizSet = new QuizSet();
 
-        public List<User>? Users { get { return userSet.Users; }  }
-        public List<Quiz>? Quizzes { get { return quizSet.Quizzes; } }
+        public List<User>? Users { get { return userSet.Users; } set { userSet.Users = value; } }
+        public List<Quiz>? Quizzes { get { return quizSet.Quizzes; } set { quizSet.Quizzes = value; } }
         public DataService()
         {
             usersXmlFilePath = GetFilePath(UsersXmlFileName);
@@ -92,7 +92,20 @@ namespace QuizBot_1._0.Infrastructure
             SaveUsersData();
             GetUsersData(); // ?
         }
-
+        public void CleanUsersData()
+        {
+            userSet = new UserSet();
+            SaveUsersData();
+        }
+        public void RemoveQuiz(Quiz quize)
+        {
+            quizSet.Quizzes.Remove(quize);
+            SaveQuizzesData();
+        }
+        public void SaveAllQuizzes()
+        {
+            SaveQuizzesData();
+        }
         private void SaveUsersData()
         {
             SerializeUsersDataToFile(userSet);
@@ -146,6 +159,8 @@ namespace QuizBot_1._0.Infrastructure
 
         private void SerializeUsersDataToFile(UserSet us)
         {
+            if (File.Exists(usersXmlFilePath)) File.Delete(usersXmlFilePath);
+
             XmlSerializer serializer = new XmlSerializer(typeof(UserSet));
             using (var stream = new FileStream(this.usersXmlFilePath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Read))
             {
@@ -155,6 +170,8 @@ namespace QuizBot_1._0.Infrastructure
         }
         private void SerializeQuizzesDataToFile(QuizSet qs)
         {
+            if (File.Exists(quizzesXmlFilePath)) File.Delete(quizzesXmlFilePath);
+
             XmlSerializer serializer = new XmlSerializer(typeof(QuizSet));
             using (var stream = new FileStream(this.quizzesXmlFilePath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Read))
             {
