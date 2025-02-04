@@ -1,4 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <UserSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Users />
+  <Users>
+    <User>
+      <ChatId>714146601</ChatId>
+      <UserName>Evgen_Berezovsky</UserName>
+      <Scores>
+        <Score>
+          <Time>2025-02-04T16:13:55.1923803+02:00</Time>
+          <Topic>АРХІТЕКТУРНО-БУДІВЕЛЬНА ВІКТОРИНА</Topic>
+          <Result>0.45454547</Result>
+        </Score>
+        <Score>
+          <Time>2025-02-04T16:14:26.2632041+02:00</Time>
+          <Topic>ЗАЯЧА (КРОЛЯЧА) ВІКТОРИНА</Topic>
+          <Result>0.36363637</Result>
+        </Score>
+        <Score>
+          <Time>2025-02-04T16:15:00.8455672+02:00</Time>
+          <Topic>gfhfghgfh</Topic>
+          <Result>0</Result>
+        </Score>
+      </Scores>
+    </User>
+  </Users>
 </UserSet>
