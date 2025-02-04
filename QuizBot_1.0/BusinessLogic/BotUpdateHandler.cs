@@ -73,7 +73,7 @@ namespace QuizBot_1._0.BusinessLogic
                     response = GiveResponseToAnswerCallback(message, chatId, out menu);
                     break;
                 case var mes when mes == "nextquestion":
-                    response = GiveResponseToAnswerCallback(chatId);
+                    response = GiveResponseToNextQuestionCallback(chatId);
                     break;
                 case var mes when mes == "finishquiz":
                     response = GiveResponseToFinishQuizCallback(chatId);
@@ -198,7 +198,7 @@ namespace QuizBot_1._0.BusinessLogic
             {
                 userChatCurrentState[chatId] = ChatCurrentState.ResultsProcessState;
                 menu = GetInfoMenu();
-                response = "Виберіть потрібну дію?";
+                response = $"<b>Виберіть потрібну дію?</b>";
             }
             return response;
         }
@@ -206,7 +206,7 @@ namespace QuizBot_1._0.BusinessLogic
         {
             string response = String.Empty;
 
-            if (userChatCurrentState[chatId] == ChatCurrentState.ResultsProcessState)
+            if (userChatCurrentState.ContainsKey(chatId) && userChatCurrentState[chatId] == ChatCurrentState.ResultsProcessState)
             {
                 if (_dataService.Users.Count == 0)
                 {
@@ -267,7 +267,7 @@ namespace QuizBot_1._0.BusinessLogic
             if (_dataService.Quizzes == null || _dataService.Quizzes.Count == 0)
             {
                 menu = null;
-                response = "Немає доступних вікторін.";
+                response = "<b>Немає доступних вікторін.</b>";
                 return response;
             }
 
@@ -286,7 +286,7 @@ namespace QuizBot_1._0.BusinessLogic
         #endregion
 
         #region GiveResponseToCallback methods
-        private string GiveResponseToAnswerCallback(long chatId)
+        private string GiveResponseToNextQuestionCallback(long chatId)
         {
             string response = "Невірний ввод";
             if (userCreateQuizState.ContainsKey(chatId))
@@ -295,7 +295,7 @@ namespace QuizBot_1._0.BusinessLogic
                 if (state.CurrentStep == QuizStep.EnterQuestionOrFinish)
                 {
                     state.CurrentStep = QuizStep.EnterQuestion;
-                    response = "Будь ласка, введіть наступне питання:";
+                    response = "<b>Будь ласка, введіть наступне питання:</b>";
                 }
             }
             return response;
@@ -308,7 +308,7 @@ namespace QuizBot_1._0.BusinessLogic
                 var state = userCreateQuizState[chatId];
                 if (state.CurrentStep == QuizStep.EnterQuestionOrFinish)
                 {
-                    response = $"Quiz '{state.Title}' created with {state.Questions.Count} questions!";
+                    response = $"Вікторина <b> -'{state.Title}'- </b> сворена. \nКількість питань: <b> {state.Questions.Count} </b>.";
 
                     Quiz quiz = new Quiz();
                     quiz.Topic = state.Title;
@@ -319,7 +319,7 @@ namespace QuizBot_1._0.BusinessLogic
                     userChatCurrentState[chatId] = ChatCurrentState.StartState;
 
 
-                    string notificationMessage = $"У нас есть новая викторина! -{quiz.Topic}-\nПроверьте свои знания.";
+                    string notificationMessage = $"У нас есть новая викторина! \n<b> -{quiz.Topic}- </b> \nПроверьте свои знания.";
                     var chatIdCollection = _dataService.Users.Where(u => u.ChatId != 0).Select(u => u.ChatId).ToList();
 
                     OnNewQuizCreated(new NewQuizCreatedEventArgs(chatIdCollection, notificationMessage));
@@ -332,37 +332,37 @@ namespace QuizBot_1._0.BusinessLogic
         private string GiveResponseToCleanUserInfoCallback(long chatId)
         {
             string response = "Невірний ввод.";
-            if (userChatCurrentState[chatId] == ChatCurrentState.ResultsProcessState)
+            if (userChatCurrentState.ContainsKey(chatId) && userChatCurrentState[chatId] == ChatCurrentState.ResultsProcessState)
             {
                 _dataService.CleanUsersData();
                 userChatCurrentState[chatId] = ChatCurrentState.StartState;
-                response = "Дані видалено.";
+                response = "<b>Дані видалено.</b>";
             }
             return response;
         }
         private string GiveResponseToDeleteQuizNumberNoCallback(long chatId)
         {
             string response = "Невірний ввод.";
-            if (userChatCurrentState[chatId] == ChatCurrentState.QuizDeletionState)
+            if (userChatCurrentState.ContainsKey(chatId) && userChatCurrentState[chatId] == ChatCurrentState.QuizDeletionState)
             {
                 foreach (var quize in _dataService.Quizzes)
                 {
                     if (!quize.IsActive) quize.IsActive = true;
                 }
-                response = "Видалення скасовано.";
+                response = "<b>Видалення скасовано.</b>";
             }
             return response;
         }
         private string GiveResponseToDeleteQuizNumberYesCallback(long chatId)
         {
             string response = "Невірний ввод.";
-            if (userChatCurrentState[chatId] == ChatCurrentState.QuizDeletionState)
+            if (userChatCurrentState.ContainsKey(chatId) && userChatCurrentState[chatId] == ChatCurrentState.QuizDeletionState)
             {
                 var quizeToDelete = (from q in _dataService.Quizzes
                                      where q.IsActive == false
                                      select q).FirstOrDefault();
                 _dataService.RemoveQuiz(quizeToDelete);
-                response = "Дані оновлені";
+                response = "<b>Дані оновлені</b>";
             }
 
             return response;
@@ -371,7 +371,7 @@ namespace QuizBot_1._0.BusinessLogic
         {
             menu = null;
             string response = "Невірний ввод.";
-            if (userChatCurrentState[chatId] == ChatCurrentState.ResultsProcessState)
+            if (userChatCurrentState.ContainsKey(chatId) && userChatCurrentState[chatId] == ChatCurrentState.ResultsProcessState)
             {
                 userChatCurrentState[chatId] = ChatCurrentState.QuizDeletionState;
                 menu = GetDeleteQuizMenu();
@@ -385,20 +385,20 @@ namespace QuizBot_1._0.BusinessLogic
             string response = string.Empty;
             string subresponse = string.Empty;
 
-            if (userChatCurrentState[chatId] == ChatCurrentState.QuizPassingState && userQuizQuestionState.ContainsKey(chatId))
+            if (userQuizQuestionState.ContainsKey(chatId) && userChatCurrentState[chatId] == ChatCurrentState.QuizPassingState)
             {
                 int questionIndex = userQuizQuestionState[chatId];
-                int.TryParse(message.Replace("/answer", string.Empty), out int index);
+                int.TryParse(message.Replace("answer", string.Empty), out int index);
 
                 // Проверяем правильность ответа
                 if (userQuizState[chatId].Questions[questionIndex].CorrectOptionIndex == index)
                 {
                     userCorrectAnswers[chatId]++;
-                    subresponse = "Вірно!";
+                    subresponse = "<b>Вірно!</b>";
                 }
                 else
                 {
-                    subresponse = $"Невірно! Вірна відповідь: {userQuizState[chatId].Questions[questionIndex].Answer}";
+                    subresponse = $"<b>Невірно!</b> \nВірна відповідь: <b>{userQuizState[chatId].Questions[questionIndex].Answer}</b>";
                 }
 
                 // Переход к следующему вопросу
@@ -417,7 +417,7 @@ namespace QuizBot_1._0.BusinessLogic
                     _dataService.AddNewUserOrUpdate(userProgressState[chatId]);
 
 
-                    response = $"Викторина завершена! Ви вірно відповіли на {correctAnswers} из {userQuizState[chatId].Questions.Count} питань.";
+                    response = $"Викторина завершена! \nВи вірно відповіли на <b>{correctAnswers}</b> из <b>{userQuizState[chatId].Questions.Count}</b> питань.";
 
                     // Сбрасываем состояние пользователя
                     userChatCurrentState[chatId] = ChatCurrentState.StartState;
@@ -450,11 +450,11 @@ namespace QuizBot_1._0.BusinessLogic
         {
             menu = null;
             string response = "Невірний ввод.";
-            if (userChatCurrentState[chatId] == ChatCurrentState.QuizDeletionState)
+            if (userChatCurrentState.ContainsKey(chatId) && userChatCurrentState[chatId] == ChatCurrentState.QuizDeletionState)
             {
                 menu = GetYesNoMenu();
                 int.TryParse(message.Replace("deletequiznumber", string.Empty), out int quizIndex);
-                response = $"Підтвердження видалення викторини: \n{_dataService.Quizzes[quizIndex].Topic}";
+                response = $"Підтвердження видалення викторини: \n<b>{_dataService.Quizzes[quizIndex].Topic}</b>";
                 _dataService.Quizzes[quizIndex].IsActive = false;
                 Console.WriteLine(_dataService.Quizzes[quizIndex].Topic);
             }
@@ -465,7 +465,7 @@ namespace QuizBot_1._0.BusinessLogic
         {
             var newQuizState = userCreateQuizState[chatId];
             newQuizState.CurrentStep = QuizStep.EnterTitle;
-            string response = "Давайте створимо нову вікторину! \nБудь ласка, введіть назву вікторини:";
+            string response = "Давайте створимо нову вікторину! \n<b>Будь ласка, введіть назву вікторини:</b>";
             return response;
         }
         private string SendNextQuestion(long chatId, out InlineKeyboardMarkup menu)
@@ -475,7 +475,7 @@ namespace QuizBot_1._0.BusinessLogic
             var question = questionItem.Question;
 
             menu = QuizMenu(questionItem);
-            string response = $"Вопрос {questionIndex + 1}: {question}";
+            string response = $"Вопрос {questionIndex + 1}: \n<b>{question}</b> ";
             return response;
         }
         private string ProcessQuizStep(Update update, out InlineKeyboardMarkup menu)
@@ -488,7 +488,7 @@ namespace QuizBot_1._0.BusinessLogic
             string input = string.Empty;
             string callback = string.Empty;
 
-            if (userChatCurrentState[chatId] == ChatCurrentState.NewQuizCreationState && userCreateQuizState.ContainsKey(chatId))
+            if (userCreateQuizState.ContainsKey(chatId) && userChatCurrentState[chatId] == ChatCurrentState.NewQuizCreationState)
             {
                 if (update.Message != null)
                 {

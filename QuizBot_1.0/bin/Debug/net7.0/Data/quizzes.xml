@@ -255,5 +255,193 @@
         </QuestionItem>
       </Questions>
     </Quiz>
+    <Quiz>
+      <IsActive>false</IsActive>
+      <Topic>ENVIRONMENT</Topic>
+      <Questions>
+        <QuestionItem>
+          <Answer>wildlife</Answer>
+          <CorrectOptionIndex>3</CorrectOptionIndex>
+          <Question>Animals, birds, and plants living in their natural environment...</Question>
+          <Options>
+            <string>grasslands</string>
+            <string>biodiversity</string>
+            <string>wilderness</string>
+            <string>wildlife</string>
+          </Options>
+        </QuestionItem>
+        <QuestionItem>
+          <Answer>grasslands</Answer>
+          <CorrectOptionIndex>1</CorrectOptionIndex>
+          <Question>A large open area of country covered with grass, especially one used for grazing...</Question>
+          <Options>
+            <string>plains</string>
+            <string>grasslands</string>
+            <string>desert</string>
+            <string>wildlife</string>
+          </Options>
+        </QuestionItem>
+        <QuestionItem>
+          <Answer>desert</Answer>
+          <CorrectOptionIndex>0</CorrectOptionIndex>
+          <Question>An extremely dry area with little water and few plants...</Question>
+          <Options>
+            <string>desert</string>
+            <string>humidity</string>
+            <string>desolate</string>
+            <string>hawk</string>
+          </Options>
+        </QuestionItem>
+        <QuestionItem>
+          <Answer>altitude</Answer>
+          <CorrectOptionIndex>1</CorrectOptionIndex>
+          <Question>Height above sea level</Question>
+          <Options>
+            <string>dusty</string>
+            <string>altitude</string>
+            <string>year-round</string>
+            <string>temperature</string>
+          </Options>
+        </QuestionItem>
+        <QuestionItem>
+          <Answer>humidity</Answer>
+          <CorrectOptionIndex>1</CorrectOptionIndex>
+          <Question>The amount of moisture in the air...</Question>
+          <Options>
+            <string>temperature</string>
+            <string>humidity</string>
+            <string>dusty</string>
+            <string>altitude</string>
+          </Options>
+        </QuestionItem>
+        <QuestionItem>
+          <Answer>desolate</Answer>
+          <CorrectOptionIndex>0</CorrectOptionIndex>
+          <Question>Deserted, without inhabitants, barren...</Question>
+          <Options>
+            <string>desolate</string>
+            <string>neophyte</string>
+            <string>desert</string>
+            <string>berate</string>
+          </Options>
+        </QuestionItem>
+        <QuestionItem>
+          <Answer>vary from</Answer>
+          <CorrectOptionIndex>2</CorrectOptionIndex>
+          <Question>To be different...</Question>
+          <Options>
+            <string>altitude</string>
+            <string>year-round</string>
+            <string>vary from</string>
+            <string>cultivate</string>
+          </Options>
+        </QuestionItem>
+        <QuestionItem>
+          <Answer>cultivate</Answer>
+          <CorrectOptionIndex>3</CorrectOptionIndex>
+          <Question>To prepare land and grow crops on it, or to grow a particular crop</Question>
+          <Options>
+            <string>culture</string>
+            <string>evolve</string>
+            <string>deliver</string>
+            <string>cultivate</string>
+          </Options>
+        </QuestionItem>
+      </Questions>
+    </Quiz>
+    <Quiz>
+      <IsActive>false</IsActive>
+      <Topic>CYBER SAFETY</Topic>
+      <Questions>
+        <QuestionItem>
+          <Answer>identity theft</Answer>
+          <CorrectOptionIndex>3</CorrectOptionIndex>
+          <Question>A crime that involves someone pretending to be another person in order to steal money or obtain benefits...</Question>
+          <Options>
+            <string>online bulling</string>
+            <string>identity fraud</string>
+            <string>phishing</string>
+            <string>identity theft</string>
+          </Options>
+        </QuestionItem>
+        <QuestionItem>
+          <Answer>online bullying</Answer>
+          <CorrectOptionIndex>1</CorrectOptionIndex>
+          <Question>The use of the Internet and related technologies to harm other people, in a deliberate, repeated, and hostile manner...</Question>
+          <Options>
+            <string>cyberbullying</string>
+            <string>online bullying</string>
+            <string>telecommunication fraud</string>
+            <string>social bullying</string>
+          </Options>
+        </QuestionItem>
+        <QuestionItem>
+          <Answer>anti-virus software</Answer>
+          <CorrectOptionIndex>1</CorrectOptionIndex>
+          <Question>A program that finds and removes viruses from a computer</Question>
+          <Options>
+            <string>spyware</string>
+            <string>anti-virus software</string>
+            <string>anti-malware software</string>
+            <string>a properly configured gateway</string>
+          </Options>
+        </QuestionItem>
+        <QuestionItem>
+          <Answer>chatroom</Answer>
+          <CorrectOptionIndex>3</CorrectOptionIndex>
+          <Question>An area on the Internet or other computer network where users can communicate, typically limiting communication to a particular topic</Question>
+          <Options>
+            <string>e-mail</string>
+            <string>hobbies</string>
+            <string>webcam</string>
+            <string>chatroom</string>
+          </Options>
+        </QuestionItem>
+        <QuestionItem>
+          <Answer>cybercrime</Answer>
+          <CorrectOptionIndex>2</CorrectOptionIndex>
+          <Question>Crime or illegal activity that is done using the internet</Question>
+          <Options>
+            <string>hacking</string>
+            <string>identity theft</string>
+            <string>cybercrime</string>
+            <string>phishing</string>
+          </Options>
+        </QuestionItem>
+        <QuestionItem>
+          <Answer>search engine</Answer>
+          <CorrectOptionIndex>1</CorrectOptionIndex>
+          <Question>A computer program that finds information on the internet by looking for words that you have typed in</Question>
+          <Options>
+            <string>main server</string>
+            <string>search engine</string>
+            <string>anti-virus software</string>
+            <string>web browser</string>
+          </Options>
+        </QuestionItem>
+        <QuestionItem>
+          <Answer>webcam</Answer>
+          <CorrectOptionIndex>1</CorrectOptionIndex>
+          <Question>A camera that records moving pictures and sound and allows these to be broadcast on the internet as they happen</Question>
+          <Options>
+            <string>temper</string>
+            <string>webcam</string>
+            <string>chatroom</string>
+            <string>keyboard</string>
+          </Options>
+        </QuestionItem>
+        <QuestionItem>
+          <Answer>concern</Answer>
+          <CorrectOptionIndex>0</CorrectOptionIndex>
+          <Question>A worried or nervous feeling about something, or something that makes you feel worried</Question>
+          <Options>
+            <string>concern</string>
+            <string>anger</string>
+            <string>threat</string>
+            <string>compassion</string>
+          </Options>
+        </QuestionItem>
+      </Questions>
+    </Quiz>
   </Quizzes>
 </QuizSet>

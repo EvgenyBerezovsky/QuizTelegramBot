@@ -6,7 +6,7 @@ namespace QuizBot_1._0.Infrastructure
 {
     public class TelegramService
     {
-        //private string imagePath = @"D:\ITVDN\SmartTest\QuizBot\QuizBot_1.0\bin\Debug\net7.0\Data\botImage.jpg";
+        private string imagePath = @"D:\ITVDN\SmartTest\QuizBot\QuizBot_1.0\bin\Debug\net7.0\Data\botImage.jpg";
 
         private readonly TelegramBot _bot;
 
@@ -16,6 +16,7 @@ namespace QuizBot_1._0.Infrastructure
         }
         public async Task<IEnumerable<Update>> GetUpdatesAsync(long offset)
         {
+
             return await _bot.MakeRequestAsync(new GetUpdates() { Offset = offset });
         }
         public async Task SendMessageAsync(long chatId, string text, InlineKeyboardMarkup? replyMarkup = null)
@@ -36,8 +37,9 @@ namespace QuizBot_1._0.Infrastructure
 
             await _bot.MakeRequestAsync(new SendMessage(chatId, text)
             {
+                ParseMode = SendMessage.ParseModeEnum.HTML,
                 ReplyMarkup = replyMarkup
-            });
+            }) ;
         }
         public async Task AnswerCallbackQueryAsync(string callbackQueryId)
         {
