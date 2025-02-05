@@ -204,9 +204,11 @@ namespace QuizBot_1._0.BusinessLogic
         }
         private string GiveResponseToShowUserInfoCallback(long chatId)
         {
-            string response = String.Empty;
+            Console.WriteLine(userChatCurrentState[chatId].ToString());
+            string response = "Невірний ввод.";
 
-            if (userChatCurrentState.ContainsKey(chatId) && userChatCurrentState[chatId] == ChatCurrentState.ResultsProcessState)
+            if (!userChatCurrentState.ContainsKey(chatId)) userChatCurrentState.Add(chatId, ChatCurrentState.StartState);
+            if (userChatCurrentState.ContainsKey(chatId) && (userChatCurrentState[chatId] is ChatCurrentState.ResultsProcessState | userChatCurrentState[chatId] is ChatCurrentState.StartState))
             {
                 if (_dataService.Users.Count == 0)
                 {
@@ -232,7 +234,7 @@ namespace QuizBot_1._0.BusinessLogic
                 userChatCurrentState[chatId] = ChatCurrentState.StartState;
             }
 
-            return response == string.Empty ? "Невірний ввод." : response;
+            return response;
         }
         private string GiveResponseToCreateNew(Update update, out InlineKeyboardMarkup menu)
         {
@@ -254,34 +256,37 @@ namespace QuizBot_1._0.BusinessLogic
         }
         private string GiveResponseToStart(Message message, long chatId, out InlineKeyboardMarkup menu)
         {
-            string response;
+            menu = null;
+            string response = "Невірний ввод";
             if (!userChatCurrentState.ContainsKey(chatId))
             {
                 userChatCurrentState.Add(chatId, ChatCurrentState.StartState);
             }
-            userChatCurrentState[chatId] = ChatCurrentState.StartState;
-            userQuizState.Remove(chatId);
-            userProgressState.Remove(chatId);
-            userCreateQuizState.Remove(chatId);
-
-            if (_dataService.Quizzes == null || _dataService.Quizzes.Count == 0)
+            if (userChatCurrentState[chatId] is ChatCurrentState.StartState)
             {
-                menu = null;
-                response = "<b>Немає доступних вікторін.</b>";
-                return response;
-            }
+                userQuizState.Remove(chatId);
+                userProgressState.Remove(chatId);
+                userCreateQuizState.Remove(chatId);
 
-            else
-            {
-                if (!userProgressState.ContainsKey(chatId))
+                if (_dataService.Quizzes == null || _dataService.Quizzes.Count == 0)
                 {
-                    var userName = message.Chat.Username == null ? "Unknown_User" : message.Chat.Username;
-                    userProgressState.Add(chatId, new User(chatId, userName));
+                    menu = null;
+                    response = "<b>Немає доступних вікторін.</b>";
+                    return response;
                 }
-                response = "Виберіть вікторину:";
-                menu = GetMainMenu();
-                return response;
+
+                else
+                {
+                    if (!userProgressState.ContainsKey(chatId))
+                    {
+                        var userName = message.Chat.Username == null ? "Unknown_User" : message.Chat.Username;
+                        userProgressState.Add(chatId, new User(chatId, userName));
+                    }
+                    response = "Виберіть вікторину:";
+                    menu = GetMainMenu();
+                }
             }
+            return response;
         }
         #endregion
 
@@ -332,7 +337,8 @@ namespace QuizBot_1._0.BusinessLogic
         private string GiveResponseToCleanUserInfoCallback(long chatId)
         {
             string response = "Невірний ввод.";
-            if (userChatCurrentState.ContainsKey(chatId) && userChatCurrentState[chatId] == ChatCurrentState.ResultsProcessState)
+            if (!userChatCurrentState.ContainsKey(chatId)) userChatCurrentState.Add(chatId, ChatCurrentState.StartState);
+            if (userChatCurrentState.ContainsKey(chatId) && (userChatCurrentState[chatId] is ChatCurrentState.ResultsProcessState || userChatCurrentState[chatId] is ChatCurrentState.StartState))
             {
                 _dataService.CleanUsersData();
                 userChatCurrentState[chatId] = ChatCurrentState.StartState;
@@ -363,6 +369,7 @@ namespace QuizBot_1._0.BusinessLogic
                                      select q).FirstOrDefault();
                 _dataService.RemoveQuiz(quizeToDelete);
                 response = "<b>Дані оновлені</b>";
+                userChatCurrentState[chatId] = ChatCurrentState.StartState;
             }
 
             return response;
@@ -371,7 +378,7 @@ namespace QuizBot_1._0.BusinessLogic
         {
             menu = null;
             string response = "Невірний ввод.";
-            if (userChatCurrentState.ContainsKey(chatId) && userChatCurrentState[chatId] == ChatCurrentState.ResultsProcessState)
+            if (userChatCurrentState.ContainsKey(chatId) && (userChatCurrentState[chatId] is ChatCurrentState.ResultsProcessState || userChatCurrentState[chatId] is ChatCurrentState.StartState))
             {
                 userChatCurrentState[chatId] = ChatCurrentState.QuizDeletionState;
                 menu = GetDeleteQuizMenu();
