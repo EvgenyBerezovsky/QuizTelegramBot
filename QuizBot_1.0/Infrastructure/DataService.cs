@@ -6,42 +6,42 @@ namespace QuizBot_1._0.Infrastructure
     public class DataService
     {
         #region Test data
-        //Quiz quiz1 = new Quiz()
-        //{
-        //    Topic = "АРХІТЕКТУРНО-БУДІВЕЛЬНА ВІКТОРИНА",
-        //    Questions = new List<QuestionItem>
-        //    {
-        //        new QuestionItem("Як перекладається з давньогрецької слово «архітектор»?", "Головний будівельник", new string[]{ "Головний будівельник", "Головний художник", "Мудрий геометр", "Старий скульптор"}, 0),
-        //        new QuestionItem("Хто побудував найбільшу піраміду?", "Хеопс", new string[] { "Хефрен", "Рамсес", "Мавроді", "Хеопс" }, 3),
-        //        new QuestionItem("Хто першим ввів термін ЗОЛОТИЙ ПЕРЕТИН?", "Леонардо да Вінчі", new string[] { "Джотто", "Фідій", "Леонардо да Вінчі", "Калликрат" }, 2),
-        //        new QuestionItem("Як називається архітектурно оформлений вхід у будівлю?", "Портал", new string[] { "Портал", "Сайт", "Блог", "Форум" }, 0),
-        //        new QuestionItem("Назва якого архітектурного стилю перекладається з французького як «імперія»?", "Ампір", new string[] { "Готика", "Ампір", "Бароко", "Модерн" }, 1),
-        //        new QuestionItem("Як називали будівельника в старовину?", "Зодчий", new string[] { "Керманич", "Головний художник", "Зодчий", "Старий скульптор" }, 2),
-        //        new QuestionItem("Майстер з кельмою - це...?", "Муляр", new string[] { "Муляр", "Тесляр", "Електрик", "Кошторисник" }, 0),
-        //        new QuestionItem("Як в архітектурі називають перший поверх будівлі?", "Цоколь", new string[] { "Цоколь", "Бельетаж", "Пентхаус", "Мансарда" }, 0),
-        //        new QuestionItem("Як називається опорна стіна будинку?", "Несуча", new string[] { "Плакуча", "Несуча", "Неминуча", "Страшнюча" }, 1),
-        //        new QuestionItem("Як називається дерев'яна споруда, стіни якого зібрані з оброблених колод?", "Зруб", new string[] { "Зруб", "Зуб", "Мазанка", "Сарай" }, 0),
-        //        new QuestionItem("Як називається будівельна машина для переміщення вантажів за допомогою рухомого каната (ланцюга)?", "Лебідка", new string[] { "Воронка", "Журавель", "Лебідка", "Сорока" }, 2)
-        //    }
-        //};
-        //Quiz quiz2 = new Quiz()
-        //{
-        //    Topic = "ЗАЯЧА (КРОЛЯЧА) ВІКТОРИНА",
-        //    Questions = new List<QuestionItem>
-        //    {
-        //        new QuestionItem("Куди заєць біжить швидше: в гору або з гори??", "В гору", new string[] { "В суп", "В нору", "В гору", "С гори" }, 2),
-        //        new QuestionItem("Сліпими чи зрячими народжуються зайчата?", "Зрячими", new string[] { "Зрячими", "Сліпими", "Балакучими", "Хитручими" }, 0),
-        //        new QuestionItem("Яку назву отримали зайченята, які народилися в червні, коли колоситься жито цвіте гречка?", "Колосовички", new string[] { "Носовички", "Колосовички", "Сніговички", "Чувачки" }, 1),
-        //        new QuestionItem("Назва якої європейської країни походить від фінікійського «і-шпанім» - «берег кроликів»?", "Іспанія", new string[] { "Лапландія", "Замбія", "Іспанія", "Зенландія" }, 2),
-        //        new QuestionItem("Під яким кущем сидить заєць під час дощу?", "Під мокрим", new string[] { "Під крапівним", "Під капустним", "Під мокрим", "під морковним" }, 2),
-        //        new QuestionItem("Живуть зайці в норах?", "Ні", new string[] { "Так", "Якщо кріт дозволив ", "Ні", "Якщо там є світло" }, 2),
-        //        new QuestionItem("Чи вірно, що зуби-різці у зайців постійно ростуть і потребують у сточуванні?", "Так", new string[] { "Так", "Ні", "Тільки взимку", "Треба погуглить" }, 0),
-        //        new QuestionItem("Яку швидкість може розвивати заєць?", "40", new string[] { "40", "60", "80", "5" }, 0),
-        //        new QuestionItem("Чи вірно, що зайці-самці крупніше самок?", "Ні", new string[] { "Так", "Ні", "Якщо гарно поїв", "Запитаю татка" }, 1),
-        //        new QuestionItem("Скільки зубів у зайця?", "28", new string[] { "28", "4", "12", "32" }, 0),
-        //        new QuestionItem("Як називають зайців, які народилися восени?", "Листопадничками", new string[] { "Подосіновичками", "Жовтопузіками", "Листопадничками", "Хітрожопиками" }, 2),
-        //    }
-        //};
+        Quiz quiz1 = new Quiz()
+        {
+            Topic = "MEDIA MOGULS",
+            Questions = new List<QuestionItem>
+            {
+                new QuestionItem("Tending to spread aggressively; intrusive", "invasive", new string[]{ "invasive", "insidious", "internal", "convulsive"}, 0),
+                new QuestionItem("Someone who owns and controls a large number of newspapers, television companies, magazines, etc. and is able to influence public opinion", "media mogul", new string[] { "influential", "it's not on", "defamation", "media mogul" }, 3),
+                new QuestionItem("Having the power and importance to affect something", "influential", new string[] { "philanthropic", "fraud", "influential", "wealthy" }, 2),
+                new QuestionItem("Dishonest", "corrupt", new string[] { "corrupt", "media mogul", "invasive", "it's not on" }, 0),
+                new QuestionItem("The amount of time or space given to an event by the media", "media coverage", new string[] { "display", "media coverage", "stir somebody up", "it's not on" }, 1),
+                new QuestionItem("Charitable, giving", "invasive", new string[] { "invasive", "corrupt", "philanthropic", "stir somebody up" }, 2),
+                new QuestionItem("The action of damaging the good reputation of someone", "defamation", new string[] { "defamation", "corrupt", "wealthy", "display" }, 0),
+                new QuestionItem("Wrongful or criminal deception intended to result in financial or personal gain", "fraud", new string[] { "fraud", "invasive", "display", "stir somebody up" }, 0),
+                new QuestionItem("To show", "display", new string[] { "digital", "display", "exhibit", "reverse" }, 1),
+                new QuestionItem("Far-reaching", "wide-spread", new string[] { "wide-spread", "influential", "confined", "wealthy" }, 0),
+                new QuestionItem("Interesting and exciting character", "colorful personality", new string[] { "influential", "media mogul", "colorful personality", "media coverage" }, 2)
+            }
+        };
+        Quiz quiz2 = new Quiz()
+        {
+            Topic = "IWorld",
+            Questions = new List<QuestionItem>
+            {
+                new QuestionItem("A wearable device that keeps time and can communicate wirelessly with a smartphone", "smartwatch", new string[] { "smartwatch", "headphones", "accessibility", "smartphone" }, 2),
+                new QuestionItem("A home equipped with technology that promotes safety, telemonitoring, comfort, and other benefits", "smart home", new string[] { "smart home", "accessibility", "eco-friendly home", "cofee mashine" }, 0),
+                new QuestionItem("The fact that something is suitable for your purposes and causes no difficulty for your schedule or plans", "convenience", new string[] { "appliance", "convenience", "accessibility", "efficiency" }, 1),
+                new QuestionItem("The state of experiencing no difficulty, effort, pain, etc.", "ease", new string[] { "convenience", "awake", "ease", "alleviate" }, 2),
+                new QuestionItem("The degree of ease with which it is possible to reach a certain location from other locations.", "accessibility", new string[] { "universality", "availability", "accessibility", "affordability" }, 2),
+                new QuestionItem("Affecting someone in a way that annoys them and makes them feel uncomfortable", "intrusive", new string[] { "irksome", "insidious", "intrusive", "accessibility" }, 2),
+                new QuestionItem("To take control of something", "take over", new string[] { "take over", "intrusive", "remotely", "smart home" }, 0),
+                new QuestionItem("A system that keeps air cool and dry", "air-conditioning", new string[] { "air-conditioning", "deforestation", "smartwatch", "fridge-freezer" }, 0),
+                new QuestionItem("The system that keeps a building warm", "heating", new string[] { "burning", "heating", "boiling", "firing" }, 1),
+                new QuestionItem("A piece of electrical equipment with a particular purpose in the home", "appliance", new string[] { "appliance", "furniture", "utilities", "accessibility" }, 0),
+                new QuestionItem("From a distance", "remotely", new string[] { "heating", "externally", "remotely", "appliance" }, 2),
+            }
+        };
         #endregion
 
         private const string DirectoryName = "Data";

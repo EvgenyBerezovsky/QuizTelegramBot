@@ -249,9 +249,6 @@ namespace QuizBot_1._0.BusinessLogic
                 userCreateQuizState[chatId] = new QuizState();
                 response = StartQuizCreation(chatId);
             }
-
-
-
             return response;
         }
         private string GiveResponseToStart(Message message, long chatId, out InlineKeyboardMarkup menu)
