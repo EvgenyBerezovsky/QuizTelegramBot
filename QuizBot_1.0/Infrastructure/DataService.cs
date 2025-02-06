@@ -22,7 +22,8 @@ namespace QuizBot_1._0.Infrastructure
                 new QuestionItem("To show", "display", new string[] { "digital", "display", "exhibit", "reverse" }, 1),
                 new QuestionItem("Far-reaching", "wide-spread", new string[] { "wide-spread", "influential", "confined", "wealthy" }, 0),
                 new QuestionItem("Interesting and exciting character", "colorful personality", new string[] { "influential", "media mogul", "colorful personality", "media coverage" }, 2)
-            }
+            },
+            IsActive = true
         };
         Quiz quiz2 = new Quiz()
         {
@@ -40,7 +41,8 @@ namespace QuizBot_1._0.Infrastructure
                 new QuestionItem("The system that keeps a building warm", "heating", new string[] { "burning", "heating", "boiling", "firing" }, 1),
                 new QuestionItem("A piece of electrical equipment with a particular purpose in the home", "appliance", new string[] { "appliance", "furniture", "utilities", "accessibility" }, 0),
                 new QuestionItem("From a distance", "remotely", new string[] { "heating", "externally", "remotely", "appliance" }, 2),
-            }
+            },
+            IsActive = true
         };
         #endregion
 

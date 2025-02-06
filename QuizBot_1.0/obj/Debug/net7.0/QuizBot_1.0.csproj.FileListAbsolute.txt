@@ -15,3 +15,5 @@ D:\ITVDN\SmartTest\QuizBot\QuizBot_1.0\obj\Debug\net7.0\refint\QuizBot_1.0.dll
 D:\ITVDN\SmartTest\QuizBot\QuizBot_1.0\obj\Debug\net7.0\QuizBot_1.0.pdb
 D:\ITVDN\SmartTest\QuizBot\QuizBot_1.0\obj\Debug\net7.0\QuizBot_1.0.genruntimeconfig.cache
 D:\ITVDN\SmartTest\QuizBot\QuizBot_1.0\obj\Debug\net7.0\ref\QuizBot_1.0.dll
+D:\ITVDN\SmartTest\QuizBot\QuizBot_1.0\bin\Debug\net7.0\Newtonsoft.Json.dll
+D:\ITVDN\SmartTest\QuizBot\QuizBot_1.0\bin\Debug\net7.0\Telegram.Bot.dll

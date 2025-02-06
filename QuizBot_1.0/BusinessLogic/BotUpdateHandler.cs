@@ -315,6 +315,7 @@ namespace QuizBot_1._0.BusinessLogic
                     Quiz quiz = new Quiz();
                     quiz.Topic = state.Title;
                     quiz.Questions = state.Questions;
+                    quiz.IsActive = true;
                     _dataService.SaveNewQuiz(quiz);
 
                     userCreateQuizState.Remove(chatId);

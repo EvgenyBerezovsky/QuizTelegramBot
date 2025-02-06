@@ -256,7 +256,7 @@
       </Questions>
     </Quiz>
     <Quiz>
-      <IsActive>false</IsActive>
+      <IsActive>true</IsActive>
       <Topic>MEDIA MOGULS</Topic>
       <Questions>
         <QuestionItem>
@@ -383,7 +383,7 @@
       </Questions>
     </Quiz>
     <Quiz>
-      <IsActive>false</IsActive>
+      <IsActive>true</IsActive>
       <Topic>IWorld</Topic>
       <Questions>
         <QuestionItem>

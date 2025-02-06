@@ -4,7 +4,7 @@ using NetTelegramBotApi.Types;
 
 namespace QuizBot_1._0.Infrastructure
 {
-    public class TelegramService
+    public class TelegramService 
     {
         private string imagePath = @"D:\ITVDN\SmartTest\QuizBot\QuizBot_1.0\bin\Debug\net7.0\Data\botImage.jpg";
 
