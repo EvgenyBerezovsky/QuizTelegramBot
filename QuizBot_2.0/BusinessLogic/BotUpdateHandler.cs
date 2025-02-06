@@ -270,7 +270,7 @@ namespace QuizBot_2._0.BusinessLogic
                         foreach (var score in user.Scores)
                         {
                             sb.AppendLine($"Тема: {score.Topic}");
-                            sb.AppendLine($"Балл: {score.Result.ToString("F2")}");
+                            sb.AppendLine($"Балл: {(int)(score.Result * 100)}");
                             sb.AppendLine($"Время: {score.Time}");
                             sb.AppendLine(new string('-', 10));
                         }

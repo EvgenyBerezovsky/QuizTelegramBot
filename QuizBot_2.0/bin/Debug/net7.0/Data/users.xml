@@ -15,6 +15,47 @@
           <Topic>gfgfggfsh</Topic>
           <Result>1</Result>
         </Score>
+        <Score>
+          <Time>2025-02-06T13:39:01.7977942+02:00</Time>
+          <Topic>MEDIA MOGULS</Topic>
+          <Result>0.27272728</Result>
+        </Score>
+        <Score>
+          <Time>2025-02-06T18:36:37.3809723+02:00</Time>
+          <Topic>MEDIA MOGULS</Topic>
+          <Result>0.72727275</Result>
+        </Score>
+        <Score>
+          <Time>2025-02-06T18:38:18.3838137+02:00</Time>
+          <Topic>IWorld</Topic>
+          <Result>0.8181818</Result>
+        </Score>
+        <Score>
+          <Time>2025-02-06T18:47:35.1744586+02:00</Time>
+          <Topic>MEDIA MOGULS</Topic>
+          <Result>0.36363637</Result>
+        </Score>
+      </Scores>
+    </User>
+    <User>
+      <ChatId>6873636829</ChatId>
+      <UserName>Unknown_User</UserName>
+      <Scores>
+        <Score>
+          <Time>2025-02-06T13:39:51.0714673+02:00</Time>
+          <Topic>MEDIA MOGULS</Topic>
+          <Result>0.27272728</Result>
+        </Score>
+        <Score>
+          <Time>2025-02-06T13:40:32.5764273+02:00</Time>
+          <Topic>IWorld</Topic>
+          <Result>0.45454547</Result>
+        </Score>
+        <Score>
+          <Time>2025-02-06T18:36:23.7274432+02:00</Time>
+          <Topic>MEDIA MOGULS</Topic>
+          <Result>0.6363636</Result>
+        </Score>
       </Scores>
     </User>
   </Users>
