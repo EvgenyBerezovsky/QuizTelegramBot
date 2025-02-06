@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "i4qOtqmIrGEMN4Cl2o5La3LbFKD0ygjfBRuLxW9H/ApjJhTFbPyk3B5Ja1vXJ+5uTPT9HWfqEZ1z7Z6NmY+TNw==",
+  "success": true,
+  "projectFilePath": "D:\\ITVDN\\SmartTest\\QuizBot\\QuizBot_2.0\\QuizBot_2.0.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Evgen\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\Evgen\\.nuget\\packages\\telegram.bot\\19.0.0\\telegram.bot.19.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
