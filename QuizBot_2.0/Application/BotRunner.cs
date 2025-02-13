@@ -83,7 +83,7 @@ namespace QuizBot_2._0.Application
             var chatId = message.Chat.Id;
 
             QuestionItem poll;
-            InlineKeyboardMarkup menu;
+            IReplyMarkup menu;
             
             string response = _botUpdateHandler.HandleMessage(update, out poll, out menu);
 

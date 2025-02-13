@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<QuizSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Quizzes>
+    <Quiz>
+      <IsActive>true</IsActive>
+      <Topic>MEDIA MOGULS</Topic>
+      <Questions>
+        <QuestionItem>
+          <Answer>invasive</Answer>
+          <CorrectOptionIndex>0</CorrectOptionIndex>
+          <Question>Tending to spread aggressively; intrusive</Question>
+          <Options>
+            <string>invasive</string>
+            <string>insidious</string>
+            <string>internal</string>
+            <string>convulsive</string>
+          </Options>
+        </QuestionItem>
+        <QuestionItem>
+          <Answer>media mogul</Answer>
+          <CorrectOptionIndex>3</CorrectOptionIndex>
+          <Question>Someone who owns and controls a large number of newspapers, television companies, magazines, etc. and is able to influence public opinion</Question>
+          <Options>
+            <string>influential</string>
+            <string>it's not on</string>
+            <string>defamation</string>
+            <string>media mogul</string>
+          </Options>
+        </QuestionItem>
+        <QuestionItem>
+          <Answer>influential</Answer>
+          <CorrectOptionIndex>2</CorrectOptionIndex>
+          <Question>Having the power and importance to affect something</Question>
+          <Options>
+            <string>philanthropic</string>
+            <string>fraud</string>
+            <string>influential</string>
+            <string>wealthy</string>
+          </Options>
+        </QuestionItem>
+        <QuestionItem>
+          <Answer>corrupt</Answer>
+          <CorrectOptionIndex>0</CorrectOptionIndex>
+          <Question>Dishonest</Question>
+          <Options>
+            <string>corrupt</string>
+            <string>media mogul</string>
+            <string>invasive</string>
+            <string>it's not on</string>
+          </Options>
+        </QuestionItem>
+        <QuestionItem>
+          <Answer>media coverage</Answer>
+          <CorrectOptionIndex>1</CorrectOptionIndex>
+          <Question>The amount of time or space given to an event by the media</Question>
+          <Options>
+            <string>display</string>
+            <string>media coverage</string>
+            <string>stir somebody up</string>
+            <string>it's not on</string>
+          </Options>
+        </QuestionItem>
+        <QuestionItem>
+          <Answer>invasive</Answer>
+          <CorrectOptionIndex>2</CorrectOptionIndex>
+          <Question>Charitable, giving</Question>
+          <Options>
+            <string>invasive</string>
+            <string>corrupt</string>
+            <string>philanthropic</string>
+            <string>stir somebody up</string>
+          </Options>
+        </QuestionItem>
+        <QuestionItem>
+          <Answer>defamation</Answer>
+          <CorrectOptionIndex>0</CorrectOptionIndex>
+          <Question>The action of damaging the good reputation of someone</Question>
+          <Options>
+            <string>defamation</string>
+            <string>corrupt</string>
+            <string>wealthy</string>
+            <string>display</string>
+          </Options>
+        </QuestionItem>
+        <QuestionItem>
+          <Answer>fraud</Answer>
+          <CorrectOptionIndex>0</CorrectOptionIndex>
+          <Question>Wrongful or criminal deception intended to result in financial or personal gain</Question>
+          <Options>
+            <string>fraud</string>
+            <string>invasive</string>
+            <string>display</string>
+            <string>stir somebody up</string>
+          </Options>
+        </QuestionItem>
+        <QuestionItem>
+          <Answer>display</Answer>
+          <CorrectOptionIndex>1</CorrectOptionIndex>
+          <Question>To show</Question>
+          <Options>
+            <string>digital</string>
+            <string>display</string>
+            <string>exhibit</string>
+            <string>reverse</string>
+          </Options>
+        </QuestionItem>
+        <QuestionItem>
+          <Answer>wide-spread</Answer>
+          <CorrectOptionIndex>0</CorrectOptionIndex>
+          <Question>Far-reaching</Question>
+          <Options>
+            <string>wide-spread</string>
+            <string>influential</string>
+            <string>confined</string>
+            <string>wealthy</string>
+          </Options>
+        </QuestionItem>
+        <QuestionItem>
+          <Answer>colorful personality</Answer>
+          <CorrectOptionIndex>2</CorrectOptionIndex>
+          <Question>Interesting and exciting character</Question>
+          <Options>
+            <string>influential</string>
+            <string>media mogul</string>
+            <string>colorful personality</string>
+            <string>media coverage</string>
+          </Options>
+        </QuestionItem>
+      </Questions>
+    </Quiz>
+    <Quiz>
+      <IsActive>true</IsActive>
+      <Topic>IWorld</Topic>
+      <Questions>
+        <QuestionItem>
+          <Answer>smartwatch</Answer>
+          <CorrectOptionIndex>2</CorrectOptionIndex>
+          <Question>A wearable device that keeps time and can communicate wirelessly with a smartphone</Question>
+          <Options>
+            <string>smartwatch</string>
+            <string>headphones</string>
+            <string>accessibility</string>
+            <string>smartphone</string>
+          </Options>
+        </QuestionItem>
+        <QuestionItem>
+          <Answer>smart home</Answer>
+          <CorrectOptionIndex>0</CorrectOptionIndex>
+          <Question>A home equipped with technology that promotes safety, telemonitoring, comfort, and other benefits</Question>
+          <Options>
+            <string>smart home</string>
+            <string>accessibility</string>
+            <string>eco-friendly home</string>
+            <string>cofee mashine</string>
+          </Options>
+        </QuestionItem>
+        <QuestionItem>
+          <Answer>convenience</Answer>
+          <CorrectOptionIndex>1</CorrectOptionIndex>
+          <Question>The fact that something is suitable for your purposes and causes no difficulty for your schedule or plans</Question>
+          <Options>
+            <string>appliance</string>
+            <string>convenience</string>
+            <string>accessibility</string>
+            <string>efficiency</string>
+          </Options>
+        </QuestionItem>
+        <QuestionItem>
+          <Answer>ease</Answer>
+          <CorrectOptionIndex>2</CorrectOptionIndex>
+          <Question>The state of experiencing no difficulty, effort, pain, etc.</Question>
+          <Options>
+            <string>convenience</string>
+            <string>awake</string>
+            <string>ease</string>
+            <string>alleviate</string>
+          </Options>
+        </QuestionItem>
+        <QuestionItem>
+          <Answer>accessibility</Answer>
+          <CorrectOptionIndex>2</CorrectOptionIndex>
+          <Question>The degree of ease with which it is possible to reach a certain location from other locations.</Question>
+          <Options>
+            <string>universality</string>
+            <string>availability</string>
+            <string>accessibility</string>
+            <string>affordability</string>
+          </Options>
+        </QuestionItem>
+        <QuestionItem>
+          <Answer>intrusive</Answer>
+          <CorrectOptionIndex>2</CorrectOptionIndex>
+          <Question>Affecting someone in a way that annoys them and makes them feel uncomfortable</Question>
+          <Options>
+            <string>irksome</string>
+            <string>insidious</string>
+            <string>intrusive</string>
+            <string>accessibility</string>
+          </Options>
+        </QuestionItem>
+        <QuestionItem>
+          <Answer>take over</Answer>
+          <CorrectOptionIndex>0</CorrectOptionIndex>
+          <Question>To take control of something</Question>
+          <Options>
+            <string>take over</string>
+            <string>intrusive</string>
+            <string>remotely</string>
+            <string>smart home</string>
+          </Options>
+        </QuestionItem>
+        <QuestionItem>
+          <Answer>air-conditioning</Answer>
+          <CorrectOptionIndex>0</CorrectOptionIndex>
+          <Question>A system that keeps air cool and dry</Question>
+          <Options>
+            <string>air-conditioning</string>
+            <string>deforestation</string>
+            <string>smartwatch</string>
+            <string>fridge-freezer</string>
+          </Options>
+        </QuestionItem>
+        <QuestionItem>
+          <Answer>heating</Answer>
+          <CorrectOptionIndex>1</CorrectOptionIndex>
+          <Question>The system that keeps a building warm</Question>
+          <Options>
+            <string>burning</string>
+            <string>heating</string>
+            <string>boiling</string>
+            <string>firing</string>
+          </Options>
+        </QuestionItem>
+        <QuestionItem>
+          <Answer>appliance</Answer>
+          <CorrectOptionIndex>0</CorrectOptionIndex>
+          <Question>A piece of electrical equipment with a particular purpose in the home</Question>
+          <Options>
+            <string>appliance</string>
+            <string>furniture</string>
+            <string>utilities</string>
+            <string>accessibility</string>
+          </Options>
+        </QuestionItem>
+        <QuestionItem>
+          <Answer>remotely</Answer>
+          <CorrectOptionIndex>2</CorrectOptionIndex>
+          <Question>From a distance</Question>
+          <Options>
+            <string>heating</string>
+            <string>externally</string>
+            <string>remotely</string>
+            <string>appliance</string>
+          </Options>
+        </QuestionItem>
+      </Questions>
+    </Quiz>
+  </Quizzes>
+</QuizSet>

@@ -47,6 +47,10 @@
             "Telegram.Bot": {
               "target": "Package",
               "version": "[19.0.0, )"
+            },
+            "Tuscen.Telegram.Bot.Extensions.KeyboardBuilders": {
+              "target": "Package",
+              "version": "[1.0.0, )"
             }
           },
           "imports": [

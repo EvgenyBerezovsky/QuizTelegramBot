@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="Telegram.Bot" Version="19.0.0" />
+    <PackageReference Include="Tuscen.Telegram.Bot.Extensions.KeyboardBuilders" Version="1.0.0" />
   </ItemGroup>
 
 </Project>

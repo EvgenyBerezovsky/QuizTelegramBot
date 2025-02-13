@@ -1,0 +1,11 @@
+﻿
+
+namespace QuizBot_3._0.Entities
+{
+    public class QuizState
+    {
+        public string Title { get; set; }
+        public List<QuestionItem> Questions { get; set; } = new List<QuestionItem>();
+        public QuizStep CurrentStep { get; set; }
+    }
+}

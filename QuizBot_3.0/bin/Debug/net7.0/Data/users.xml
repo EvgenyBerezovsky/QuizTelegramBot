@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Users>
+    <User>
+      <ChatId>714146601</ChatId>
+      <UserName>Evgen_Berezovsky</UserName>
+      <Scores>
+        <Score>
+          <Time>2025-02-09T12:01:19.4816784+02:00</Time>
+          <Topic>MEDIA MOGULS</Topic>
+          <Result>0.36363637</Result>
+        </Score>
+        <Score>
+          <Time>2025-02-09T13:22:26.7857897+02:00</Time>
+          <Topic>MEDIA MOGULS</Topic>
+          <Result>0.54545456</Result>
+        </Score>
+      </Scores>
+    </User>
+  </Users>
+</UserSet>

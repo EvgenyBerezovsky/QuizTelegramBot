@@ -20,7 +20,7 @@ namespace QuizBot_2._0.Infrastructure
         {
             return await _bot.GetUpdatesAsync((int)offset);
         }
-        public async Task SendMessageAsync(long chatId, string text, QuestionItem poll = null, InlineKeyboardMarkup? replyMarkup = null)
+        public async Task SendMessageAsync(long chatId, string text, QuestionItem poll = null, IReplyMarkup? replyMarkup = null)
         {
             #region If with image
             //using (Stream stream = new FileStream(imagePath, FileMode.Open, FileAccess.Read, FileShare.Read))
@@ -48,7 +48,7 @@ namespace QuizBot_2._0.Infrastructure
             correctOptionId: poll.CorrectOptionIndex);  // Правильна відповідь
 
             }
-
+            
         }
         public async Task AnswerCallbackQueryAsync(string callbackQueryId)
         {

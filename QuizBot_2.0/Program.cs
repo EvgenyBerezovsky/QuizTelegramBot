@@ -6,7 +6,7 @@ internal class Program
 {
     #region token
     // Створюємо змінну, що буде зберігати налаштування на наш бот
-    private const string TelegramToken = "7968088181:AAHjHEiGSvxZrdtq4pJYmaeHF31xODTWq64";
+    private const string TelegramToken = "7968088181:AAGU_X_pe7wVm49h4BhfD6m3U_hUwtbUWB0";
     #endregion
     static async Task Main(string[] args)
     {
