@@ -45,16 +45,16 @@ namespace QuizBot_3._0.BusinessLogic
                 case "/start":
                     response = GiveResponseToStart(message, chatId, out menu);
                     break;
-                case "🔎 старт вікторини":
+                case "🔎 Start quiz":
                     response = GiveResponseToStartQuiz(message, chatId, out menu);
                     break;
-                case "📝 додати вікторину":
+                case "📝 Add quiz":
                     response = GiveResponseToCreateNew(update, out menu);
                     break;
-                case "🗑 видалити вікторину":
+                case "🗑 Delete quiz":
                     response = GiveResponseToDeleteQuiz(chatId, out menu);
                     break;
-                case "📈 статістика":
+                case "📈 Statistics":
                     response = GiveResponseToInfo(update, out menu);
                     break;
 
@@ -137,7 +137,7 @@ namespace QuizBot_3._0.BusinessLogic
                 }
                 else
                 {
-                    subresponse = $"<b>✔ Невірно!</b> \nВірна відповідь: <b>{userQuizState[chatId].Questions[questionIndex].Answer}</b>";
+                    subresponse = $"<b>✔ Невірно!</b> \n\nВірна відповідь: \n<b>{userQuizState[chatId].Questions[questionIndex].Answer}</b>";
                 }
 
                 // Переход к следующему вопросу
@@ -154,7 +154,7 @@ namespace QuizBot_3._0.BusinessLogic
 
                     _dataService.AddNewUserOrUpdate(userProgressState[chatId]);
 
-                    response = $"✔ Викторина завершена! \nВи вірно відповіли на <b>{correctAnswers}</b> из <b>{userQuizState[chatId].Questions.Count}</b> питань.";
+                    response = $"✔ Викторина завершена! \n\nВи вірно відповіли на <b>{correctAnswers}</b> из <b>{userQuizState[chatId].Questions.Count}</b> питань.";
 
                     // Сбрасываем состояние пользователя
                     userChatCurrentState[chatId] = ChatCurrentState.StartState;
@@ -184,8 +184,8 @@ namespace QuizBot_3._0.BusinessLogic
         }
         private ReplyKeyboardMarkup GetNewMainMenu()
         {
-            var keyboard = new ReplyKeyboardBuilder().AddRow(row => row.AddButton("🔎 старт вікторини").AddButton("📈 статістика"))
-                                                                       .AddRow(row => row.AddButton("📝 додати вікторину").AddButton("🗑 видалити вікторину"));
+            var keyboard = new ReplyKeyboardBuilder().AddRow(row => row.AddButton("🔎 Start quiz").AddButton("📈 Statistics"))
+                                                                       .AddRow(row => row.AddButton("📝 Add quiz").AddButton("🗑 Delete quiz"));
 
             var replyMarkup = new ReplyKeyboardMarkup(keyboard)
             {
@@ -278,7 +278,7 @@ namespace QuizBot_3._0.BusinessLogic
             {
                 if (_dataService.Users.Count == 0)
                 {
-                    response = "Нет информации";
+                    response = "Немає інформації";
                 }
                 else
                 {
@@ -286,11 +286,15 @@ namespace QuizBot_3._0.BusinessLogic
                     foreach (var user in _dataService.Users)
                     {
                         sb.AppendLine($"Пользователь {user.UserName}:");
+                        if (user.Scores.Count == 0)
+                        {
+                            sb.AppendLine("Немає інформації.");
+                        }
                         foreach (var score in user.Scores)
                         {
                             sb.AppendLine($"Тема: {score.Topic}");
-                            sb.AppendLine($"Балл: {(int)(score.Result * 100)}");
-                            sb.AppendLine($"Время: {score.Time}");
+                            sb.AppendLine($"Бал: {(int)(score.Result * 100)}");
+                            sb.AppendLine($"Час: {score.Time}");
                             sb.AppendLine(new string('-', 10));
                         }
                     }
@@ -386,7 +390,7 @@ namespace QuizBot_3._0.BusinessLogic
                 var state = userCreateQuizState[chatId];
                 if (state.CurrentStep == QuizStep.EnterQuestionOrFinish)
                 {
-                    response = $"✔ Вікторина <b> -'{state.Title}'- </b> створена. \n  Кількість питань: <b> {state.Questions.Count} </b>.";
+                    response = $"✔ Вікторина \n<b>-'{state.Title}'-</b> створена. \nКількість питань: <b> {state.Questions.Count} </b>.";
 
                     Quiz quiz = new Quiz();
                     quiz.Topic = state.Title;
@@ -398,7 +402,7 @@ namespace QuizBot_3._0.BusinessLogic
                     userChatCurrentState[chatId] = ChatCurrentState.StartState;
 
 
-                    string notificationMessage = $"📚 У нас есть новая викторина! \n  <b> -{quiz.Topic}- </b> \n  Проверьте свои знания.";
+                    string notificationMessage = $"📚 У нас є нова вікторина! \n<b> -{quiz.Topic}- </b> \nПеревірте свої знання.";
                     var chatIdCollection = _dataService.Users.Where(u => u.ChatId != 0).Select(u => u.ChatId).ToList();
 
                     OnNewQuizCreated(new NewQuizCreatedEventArgs(chatIdCollection, notificationMessage));
@@ -416,7 +420,7 @@ namespace QuizBot_3._0.BusinessLogic
             {
                 _dataService.CleanUsersData();
                 userChatCurrentState[chatId] = ChatCurrentState.StartState;
-                response = "<b>Дані видалено.</b>";
+                response = "<b>✔ Дані видалено.</b>";
             }
             return response;
         }
@@ -457,7 +461,7 @@ namespace QuizBot_3._0.BusinessLogic
             {
                 userChatCurrentState[chatId] = ChatCurrentState.QuizDeletionState;
                 menu = GetDeleteQuizMenu();
-                response = "👉 Виберіть вікторину зі списку. \n  Не переривайте операцію. \n👌 Далі ви зможете підтвердити чи скасувати видалення.";
+                response = "👉 Виберіть вікторину зі списку. \n\n*Не переривайте операцію. \n👌 Далі ви зможете підтвердити чи скасувати видалення.";
             }
             return response;
         }
@@ -538,7 +542,7 @@ namespace QuizBot_3._0.BusinessLogic
             userQuizQuestionState[chatId] = 0;                                // Устанавливаем начальный вопрос
             userCorrectAnswers[chatId] = 0;                                   // Сбрасываем счётчик правильных ответов
 
-            string response = $"{userQuizState[chatId].Topic}! \n  Ось ваше перше питання: \n{SendNextQuestion(chatId, out poll, out menu)}";
+            string response = $"{userQuizState[chatId].Topic}! \nОсь ваше перше питання: \n\n{SendNextQuestion(chatId, out poll, out menu)}";
             return response;
         }
         private string GiveResponseToDeleteQuizNumberCallback(long chatId, string message, out InlineKeyboardMarkup menu)
@@ -549,7 +553,7 @@ namespace QuizBot_3._0.BusinessLogic
             {
                 menu = GetYesNoMenu();
                 int.TryParse(message.Replace("deletequiznumber", string.Empty), out int quizIndex);
-                response = $"👉 Підтвердження видалення викторини: \n<b>{_dataService.Quizzes[quizIndex].Topic}</b>";
+                response = $"👉 Підтвердження видалення викторини: \n\n<b>{_dataService.Quizzes[quizIndex].Topic}</b>";
                 _dataService.Quizzes[quizIndex].IsActive = false;
                 Console.WriteLine(_dataService.Quizzes[quizIndex].Topic);
             }
@@ -560,7 +564,7 @@ namespace QuizBot_3._0.BusinessLogic
         {
             var newQuizState = userCreateQuizState[chatId];
             newQuizState.CurrentStep = QuizStep.EnterTitle;
-            string response = "👉 Давайте створимо нову вікторину! \n  <b>Будь ласка, введіть назву вікторини:</b>";
+            string response = "👉 Давайте створимо нову вікторину! \n\n<b>Будь ласка, введіть назву вікторини:</b>";
             return response;
         }
         private string SendNextQuestion(long chatId, out QuestionItem poll, out InlineKeyboardMarkup menu)
@@ -607,22 +611,22 @@ namespace QuizBot_3._0.BusinessLogic
                         var question = new QuestionItem { Question = input };
                         state.Questions.Add(question);
                         state.CurrentStep = QuizStep.EnterOption1;
-                        response = "👉 Введіть варіант 1:";
+                        response = "👉 Введіть варіант відповіді 1:";
                         break;
                     case QuizStep.EnterOption1:
                         state.Questions[^1].Options[0] = input;
                         state.CurrentStep = QuizStep.EnterOption2;
-                        response = "👉 Введіть варіант 2:";
+                        response = "👉 Введіть варіант відповіді 2:";
                         break;
                     case QuizStep.EnterOption2:
                         state.Questions[^1].Options[1] = input;
                         state.CurrentStep = QuizStep.EnterOption3;
-                        response = "👉 Введіть варіант 3:";
+                        response = "👉 Введіть варіант відповіді 3:";
                         break;
                     case QuizStep.EnterOption3:
                         state.Questions[^1].Options[2] = input;
                         state.CurrentStep = QuizStep.EnterOption4;
-                        response = "👉 Введіть варіант 4:";
+                        response = "👉 Введіть варіант відповіді 4:";
                         break;
                     case QuizStep.EnterOption4:
                         state.Questions[^1].Options[3] = input;

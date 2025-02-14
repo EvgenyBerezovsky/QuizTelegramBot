@@ -51,13 +51,20 @@ namespace QuizBot_3._0.Infrastructure.DbDataService
 
         public void CleanUsersData()
         {
-            Users = new List<User>();
+            foreach (var user in Users)
+            {
+                user.Scores = new List<Entities.Score>();
+            }
             using (var context = new DbDataServiceContext())
             {
-                foreach (var user in context.Users)
+                var users = context.Users
+                    .Include(u => u.Scores).ToList();
+
+                foreach (var user in users)
                 {
-                    context.Users.Remove(user);
+                    user.Scores = new List<Models.Score>();
                 }
+                context.SaveChanges();
             }
         }
 
@@ -415,6 +422,7 @@ namespace QuizBot_3._0.Infrastructure.DbDataService
                 scoreModel.Topic = userScore.Topic;
                 scoreModel.User = userModel;
                 scoreModel.Result = userScore.Result;
+                scoreModel.Time = userScore.Time;
                 scoreModels.Add(scoreModel);
             }
             userModel.Scores = scoreModels;
