@@ -68,7 +68,7 @@ namespace QuizBot_3._0.BusinessLogic
         {
             poll = null;
             menu = null;
-            string response = string.Empty;
+            string response = "Невірний ввод.";
 
             var callbackData = update.CallbackQuery.Data;
             var chatId = update.CallbackQuery.Message.Chat.Id;
@@ -177,8 +177,8 @@ namespace QuizBot_3._0.BusinessLogic
             var kb = new InlineKeyboardButton[2][];
             kb[0] = new InlineKeyboardButton[1];
             kb[1] = new InlineKeyboardButton[1];
-            kb[0][0] = InlineKeyboardButton.WithCallbackData("Перегляд результатів користувачів", "ShowUsersInfo");
-            kb[1][0] = InlineKeyboardButton.WithCallbackData("Видалення результатів користувачів", "CleanUsersInfo");
+            kb[0][0] = InlineKeyboardButton.WithCallbackData("📖 Перегляд результатів користувачів", "ShowUsersInfo");
+            kb[1][0] = InlineKeyboardButton.WithCallbackData("🪓 Видалення результатів користувачів", "CleanUsersInfo");
             var inlineKeyboard = new InlineKeyboardMarkup(kb);
             return inlineKeyboard;
         }
@@ -200,15 +200,16 @@ namespace QuizBot_3._0.BusinessLogic
             for (int i = 0; i < _dataService.Quizzes.Count; i++)
             {
                 string callbackData = string.Concat("StartQuiz", i);
+                string button = string.Concat("📌 ", _dataService.Quizzes[i].Topic);
                 kb[i] = new InlineKeyboardButton[1];
-                kb[i][0] = InlineKeyboardButton.WithCallbackData(_dataService.Quizzes[i].Topic.ToString(), callbackData);
+                kb[i][0] = InlineKeyboardButton.WithCallbackData(button, callbackData);
             }
             var inlineKeyboard = new InlineKeyboardMarkup(kb);
             return inlineKeyboard;
         }
         private InlineKeyboardMarkup GetYesNoMenu()
         {
-            var inlineKeyboard = new InlineKeyboardMarkup(new[] { new[] { InlineKeyboardButton.WithCallbackData("Так", "yes"), InlineKeyboardButton.WithCallbackData("Ні", "no") } });
+            var inlineKeyboard = new InlineKeyboardMarkup(new[] { new[] { InlineKeyboardButton.WithCallbackData("✅ Так", "yes"), InlineKeyboardButton.WithCallbackData("❎ Ні", "no") } });
             return inlineKeyboard;
         }
         private InlineKeyboardMarkup GetDeleteQuizMenu()
@@ -217,7 +218,7 @@ namespace QuizBot_3._0.BusinessLogic
 
             for (int i = 0; i < _dataService.Quizzes.Count; i++)
             {
-                string text = $"{i + 1} - {_dataService.Quizzes[i].Topic.ToString()}";
+                string text = $"{"🪓"} {_dataService.Quizzes[i].Topic.ToString()}";
                 string callbackData = string.Concat("DeleteQuizNumber", i);
                 kb[i] = new InlineKeyboardButton[1];
                 kb[i][0] = InlineKeyboardButton.WithCallbackData(text, callbackData);
@@ -585,6 +586,10 @@ namespace QuizBot_3._0.BusinessLogic
             string response = "Невірній ввод.";
             Console.WriteLine(update.Message.Text);
             long chatId = update.Message.Chat.Id;
+            if (!userCreateQuizState.ContainsKey(chatId))
+            {
+                return response;
+            }
             var state = userCreateQuizState[chatId];
             string input = string.Empty;
             string callback = string.Empty;
