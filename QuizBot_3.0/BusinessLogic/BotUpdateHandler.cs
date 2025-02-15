@@ -228,13 +228,10 @@ namespace QuizBot_3._0.BusinessLogic
         }
         private InlineKeyboardMarkup SendNextNewQuestionOrFinishMenu()
         {
-
             var kb = new InlineKeyboardButton[1][];
-
-
             kb[0] = new InlineKeyboardButton[2];
-            kb[0][0] = InlineKeyboardButton.WithCallbackData("Наступне питання", "NextQuestion");
-            kb[0][1] = InlineKeyboardButton.WithCallbackData("Закінчити вікторину", "FinishQuiz");
+            kb[0][0] = InlineKeyboardButton.WithCallbackData("📌 Наступне питання", "NextQuestion");
+            kb[0][1] = InlineKeyboardButton.WithCallbackData("✅ Завершити", "FinishQuiz");
 
             var inlineKeyboard = new InlineKeyboardMarkup(kb);
             return inlineKeyboard;
@@ -255,6 +252,63 @@ namespace QuizBot_3._0.BusinessLogic
         #endregion
 
         #region GiveResponseToCommand Methods
+        private string GiveResponseToStart(Message message, long chatId, out IReplyMarkup menu)
+        {
+            if (!userChatCurrentState.ContainsKey(chatId))
+            {
+                userChatCurrentState.Add(chatId, ChatCurrentState.StartState);
+            }
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<b>Виберіть відповідну дію:\n</b>");
+            sb.AppendLine();
+            sb.AppendLine("🔎 Start quiz - вибір завданнь за темами\n");
+            sb.AppendLine("📝 Add quiz - додавання нового завдання. Можлива імплементація перевірки прав доступу вчитель/учень.\n");
+            sb.AppendLine("📈 Statistics - перехід у меню результатів користувачів з оцінками та датами. Можлива імплементація перевірки прав доступу вчитель/учень.\n");
+            sb.AppendLine("🗑 Delete quiz - редагування списку завдань. Можлива імплементація перевірки прав доступу вчитель/учень.\n");
+            string response = sb.ToString();
+            menu = GetNewMainMenu();
+            return response;
+        }
+        private string GiveResponseToStartQuiz(Message message, long chatId, out IReplyMarkup menu)
+        {
+            Console.WriteLine(chatId);
+            menu = null;
+            string response = "Невірний ввод";
+            if (!userChatCurrentState.ContainsKey(chatId))
+            {
+                userChatCurrentState.Add(chatId, ChatCurrentState.StartState);
+            }
+            if (userChatCurrentState[chatId] is ChatCurrentState.StartState)
+            {
+                userQuizState.Remove(chatId);
+                userProgressState.Remove(chatId);
+                userCreateQuizState.Remove(chatId);
+
+                if (_dataService.Quizzes == null || _dataService.Quizzes.Count == 0)
+                {
+                    menu = null;
+                    response = "<b>✔ Немає доступних вікторін.</b>";
+                    return response;
+                }
+
+                else
+                {
+                    if (!userProgressState.ContainsKey(chatId))
+                    {
+                        var userName = message.Chat.Username == null ? "Unknown_User" : message.Chat.Username;
+                        userProgressState.Add(chatId, new User(chatId, userName));
+                    }
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("<b>👉 Виберіть вікторину:</b>");
+                    sb.AppendLine();
+                    sb.AppendLine("Вибір завдання за темой. Вибране завдання має бути пройдено повністю. Під час виконання завдання пункти основного меню недоступні.");
+                   
+                    response = sb.ToString();
+                    menu = GetQuizToPassMenu();
+                }
+            }
+            return response;
+        }
         private string GiveResponseToInfo(Update update, out IReplyMarkup menu)
         {
             menu = null;
@@ -266,7 +320,12 @@ namespace QuizBot_3._0.BusinessLogic
             {
                 userChatCurrentState[chatId] = ChatCurrentState.ResultsProcessState;
                 menu = GetInfoMenu();
-                response = $"<b>Виберіть потрібну дію?</b>";
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine("<b>👉 Виберіть потрібну дію?</b>");
+                sb.AppendLine();
+                sb.AppendLine("Меню статистики користувачів з можливістю перегляду та видалення результатів проходження завдань з оцінками та датами.");
+
+                response = sb.ToString();
             }
             return response;
         }
@@ -321,51 +380,7 @@ namespace QuizBot_3._0.BusinessLogic
             }
             return response;
         }
-        private string GiveResponseToStart(Message message, long chatId, out IReplyMarkup menu)
-        {
-            if (!userChatCurrentState.ContainsKey(chatId))
-            {
-                userChatCurrentState.Add(chatId, ChatCurrentState.StartState);
-            }
-            string response = "Виберіть потрібну дію:";
-            menu = GetNewMainMenu();
-            return response;
-        }
-        private string GiveResponseToStartQuiz(Message message, long chatId, out IReplyMarkup menu)
-        {
-            Console.WriteLine(chatId);
-            menu = null;
-            string response = "Невірний ввод";
-            if (!userChatCurrentState.ContainsKey(chatId))
-            {
-                userChatCurrentState.Add(chatId, ChatCurrentState.StartState);
-            }
-            if (userChatCurrentState[chatId] is ChatCurrentState.StartState)
-            {
-                userQuizState.Remove(chatId);
-                userProgressState.Remove(chatId);
-                userCreateQuizState.Remove(chatId);
-
-                if (_dataService.Quizzes == null || _dataService.Quizzes.Count == 0)
-                {
-                    menu = null;
-                    response = "<b>✔ Немає доступних вікторін.</b>";
-                    return response;
-                }
-
-                else
-                {
-                    if (!userProgressState.ContainsKey(chatId))
-                    {
-                        var userName = message.Chat.Username == null ? "Unknown_User" : message.Chat.Username;
-                        userProgressState.Add(chatId, new User(chatId, userName));
-                    }
-                    response = "👉 Виберіть вікторину:";
-                    menu = GetQuizToPassMenu();
-                }
-            }
-            return response;
-        }
+       
         #endregion
 
         #region GiveResponseToCallback methods
@@ -391,7 +406,7 @@ namespace QuizBot_3._0.BusinessLogic
                 var state = userCreateQuizState[chatId];
                 if (state.CurrentStep == QuizStep.EnterQuestionOrFinish)
                 {
-                    response = $"✔ Вікторина \n<b>-'{state.Title}'-</b> створена. \nКількість питань: <b> {state.Questions.Count} </b>.";
+                    response = $"✔ Завдання \n<b>-'{state.Title}'-</b> створене. \nКількість питань: <b> {state.Questions.Count} </b>.";
 
                     Quiz quiz = new Quiz();
                     quiz.Topic = state.Title;
@@ -462,7 +477,7 @@ namespace QuizBot_3._0.BusinessLogic
             {
                 userChatCurrentState[chatId] = ChatCurrentState.QuizDeletionState;
                 menu = GetDeleteQuizMenu();
-                response = "👉 Виберіть вікторину зі списку. \n\n*Не переривайте операцію. \n👌 Далі ви зможете підтвердити чи скасувати видалення.";
+                response = "👉 Виберіть вікторину зі списку. \nНе переривайте операцію. Далі ви зможете підтвердити чи скасувати видалення.";
             }
             return response;
         }
@@ -543,7 +558,12 @@ namespace QuizBot_3._0.BusinessLogic
             userQuizQuestionState[chatId] = 0;                                // Устанавливаем начальный вопрос
             userCorrectAnswers[chatId] = 0;                                   // Сбрасываем счётчик правильных ответов
 
-            string response = $"{userQuizState[chatId].Topic}! \nОсь ваше перше питання: \n\n{SendNextQuestion(chatId, out poll, out menu)}";
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine($"{userQuizState[chatId].Topic}!");
+            sb.AppendLine();
+            sb.AppendLine("Ось ваше перше питання:");
+            sb.AppendLine($"{SendNextQuestion(chatId, out poll, out menu)}");
+            string response =  sb.ToString();
             return response;
         }
         private string GiveResponseToDeleteQuizNumberCallback(long chatId, string message, out InlineKeyboardMarkup menu)
@@ -565,7 +585,20 @@ namespace QuizBot_3._0.BusinessLogic
         {
             var newQuizState = userCreateQuizState[chatId];
             newQuizState.CurrentStep = QuizStep.EnterTitle;
-            string response = "👉 Давайте створимо нову вікторину! \n\n<b>Будь ласка, введіть назву вікторини:</b>";
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<b>👉 Давайте створимо нове завдання!</b>");
+            sb.AppendLine();
+            sb.AppendLine("\nCтворення нового завдання. Послідовно запитується:");
+            sb.AppendLine();
+            sb.AppendLine("✏ Тема завдання.");
+            sb.AppendLine("✏ Перше питання завдання.");
+            sb.AppendLine("✏ Варіанти відповідей.");
+            sb.AppendLine("✏ Номер правильної відповіді.");
+            sb.AppendLine("✏ Наступне питання чи завершення створення завдання.");
+            sb.AppendLine("До завершення створення нового завдання пункти основного меню недоступні.\n"); 
+            sb.AppendLine("<b>📌 Будь ласка, введіть тему завдання:</b>");
+            string response = sb.ToString();
             return response;
         }
         private string SendNextQuestion(long chatId, out QuestionItem poll, out InlineKeyboardMarkup menu)
@@ -576,7 +609,7 @@ namespace QuizBot_3._0.BusinessLogic
             var question = questionItem.Question;
 
             //menu = QuizMenu(questionItem);
-            string response = $"👉 Вопрос {questionIndex + 1}";
+            string response = $"\n📌 <b>Вопрос {questionIndex + 1}</b>";
             poll = questionItem;
             return response;
         }
@@ -610,33 +643,33 @@ namespace QuizBot_3._0.BusinessLogic
                     case QuizStep.EnterTitle:
                         state.Title = input;
                         state.CurrentStep = QuizStep.EnterQuestion;
-                        response = "👉 Будь ласка, введіть перше питання:";
+                        response = "📌<b> Будь ласка, введіть перше питання:</b>";
                         break;
                     case QuizStep.EnterQuestion:
                         var question = new QuestionItem { Question = input };
                         state.Questions.Add(question);
                         state.CurrentStep = QuizStep.EnterOption1;
-                        response = "👉 Введіть варіант відповіді 1:";
+                        response = "📌 <b>Введіть варіант відповіді 1:</b>";
                         break;
                     case QuizStep.EnterOption1:
                         state.Questions[^1].Options[0] = input;
                         state.CurrentStep = QuizStep.EnterOption2;
-                        response = "👉 Введіть варіант відповіді 2:";
+                        response = "📌<b>Введіть варіант відповіді 2:</b>";
                         break;
                     case QuizStep.EnterOption2:
                         state.Questions[^1].Options[1] = input;
                         state.CurrentStep = QuizStep.EnterOption3;
-                        response = "👉 Введіть варіант відповіді 3:";
+                        response = "📌 <b>Введіть варіант відповіді 3:</b>";
                         break;
                     case QuizStep.EnterOption3:
                         state.Questions[^1].Options[2] = input;
                         state.CurrentStep = QuizStep.EnterOption4;
-                        response = "👉 Введіть варіант відповіді 4:";
+                        response = "📌 <b>Введіть варіант відповіді 4:</b>";
                         break;
                     case QuizStep.EnterOption4:
                         state.Questions[^1].Options[3] = input;
                         state.CurrentStep = QuizStep.EnterCorrectOption;
-                        response = "👉 Будь ласка, введіть номер правильного варіанту (1-4):";
+                        response = "📌 <b>Будь ласка, введіть номер правильного варіанту (1-4):</b>";
                         break;
                     case QuizStep.EnterCorrectOption:
                         if (int.TryParse(input, out int correctOption) && correctOption >= 1 && correctOption <= 4)
@@ -656,7 +689,7 @@ namespace QuizBot_3._0.BusinessLogic
                         if (callback == "nextquestion")
                         {
                             state.CurrentStep = QuizStep.EnterQuestion;
-                            response = "👉 Введіть наступне питання:";
+                            response = "📌 <b>Введіть наступне питання:</b>";
                         }
                         else if (callback == "finishquiz")
                         {
