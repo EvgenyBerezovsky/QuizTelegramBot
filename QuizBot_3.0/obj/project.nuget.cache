@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "fqMHSI1+LOd9kCdMdWBzzY8jA15l9CtSRbymBj18/Jz4sqq736Cp/jgFEVgH7Q1QuCMmEbYW0f751QN8Voa+GQ==",
+  "dgSpecHash": "LIdsbo57doJ+fq9dfHJoPtn63HnmyYxntjv/fjIQzqZhesjDlWR+BMxPk5E69drLHN+QtfKziuK7nstwaGItUA==",
   "success": true,
   "projectFilePath": "D:\\ITVDN\\SmartTest\\QuizBot\\QuizBot_3.0\\QuizBot_3.0.csproj",
   "expectedPackageFiles": [
@@ -13,6 +13,7 @@
     "C:\\Users\\Evgen\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\7.0.0\\microsoft.entityframeworkcore.relational.7.0.0.nupkg.sha512",
     "C:\\Users\\Evgen\\.nuget\\packages\\microsoft.entityframeworkcore.sqlite\\7.0.0\\microsoft.entityframeworkcore.sqlite.7.0.0.nupkg.sha512",
     "C:\\Users\\Evgen\\.nuget\\packages\\microsoft.entityframeworkcore.sqlite.core\\7.0.0\\microsoft.entityframeworkcore.sqlite.core.7.0.0.nupkg.sha512",
+    "C:\\Users\\Evgen\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\7.0.0\\microsoft.entityframeworkcore.tools.7.0.0.nupkg.sha512",
     "C:\\Users\\Evgen\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\7.0.0\\microsoft.extensions.caching.abstractions.7.0.0.nupkg.sha512",
     "C:\\Users\\Evgen\\.nuget\\packages\\microsoft.extensions.caching.memory\\7.0.0\\microsoft.extensions.caching.memory.7.0.0.nupkg.sha512",
     "C:\\Users\\Evgen\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\7.0.0\\microsoft.extensions.configuration.abstractions.7.0.0.nupkg.sha512",

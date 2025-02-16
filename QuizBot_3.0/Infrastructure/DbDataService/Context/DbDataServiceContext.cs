@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using QuizBot_3._0.Infrastructure.DbDataService.EntityConfigurations;
 using QuizBot_3._0.Infrastructure.DbDataService.Models;
 using System;
@@ -21,6 +22,7 @@ namespace QuizBot_3._0.Infrastructure.DbDataService.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite("Data Source=botData.db");
+            optionsBuilder.LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted});
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

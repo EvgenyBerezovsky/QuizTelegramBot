@@ -60,3 +60,4 @@ D:\ITVDN\SmartTest\QuizBot\QuizBot_3.0\bin\Debug\net7.0\Microsoft.EntityFramewor
 D:\ITVDN\SmartTest\QuizBot\QuizBot_3.0\bin\Debug\net7.0\Mono.TextTemplating.dll
 D:\ITVDN\SmartTest\QuizBot\QuizBot_3.0\bin\Debug\net7.0\System.CodeDom.dll
 D:\ITVDN\SmartTest\QuizBot\QuizBot_3.0\obj\Debug\net7.0\QuizBot_3.0.csproj.CopyComplete
+D:\ITVDN\SmartTest\QuizBot\QuizBot_3.0\bin\Debug\net7.0\Telegram.Bot.Extensions.KeyboardBuilders.dll

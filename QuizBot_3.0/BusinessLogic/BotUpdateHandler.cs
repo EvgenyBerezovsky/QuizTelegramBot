@@ -261,7 +261,7 @@ namespace QuizBot_3._0.BusinessLogic
             StringBuilder sb = new StringBuilder();
             sb.Append("<b>Виберіть відповідну дію:\n</b>");
             sb.AppendLine();
-            sb.AppendLine("🔎 Start quiz - вибір завданнь за темами\n");
+            sb.AppendLine("🔎 Start quiz - вибір завдань за темами\n");
             sb.AppendLine("📝 Add quiz - додавання нового завдання. Можлива імплементація перевірки прав доступу вчитель/учень.\n");
             sb.AppendLine("📈 Statistics - перехід у меню результатів користувачів з оцінками та датами. Можлива імплементація перевірки прав доступу вчитель/учень.\n");
             sb.AppendLine("🗑 Delete quiz - редагування списку завдань. Можлива імплементація перевірки прав доступу вчитель/учень.\n");

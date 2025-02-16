@@ -142,7 +142,9 @@ namespace QuizBot_3._0.Infrastructure.DbDataService
         {
             using (var context = new DbDataServiceContext())
             {
-                if (context.Database.EnsureCreated())
+                context.Database.Migrate();
+
+                if (!context.Quizzes.Any())
                 {
                     Models.Quiz quiz1 = new Models.Quiz()
                     {
