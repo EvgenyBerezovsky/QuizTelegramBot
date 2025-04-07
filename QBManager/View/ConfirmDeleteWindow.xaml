@@ -1,0 +1,87 @@
+﻿<Window x:Class="QBManager.View.ConfirmDeleteWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QBManager.View"
+        mc:Ignorable="d"
+        Height="200"
+        Width="400"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        Background="Transparent">
+    <Grid Background="#272B2F" >
+
+        <Border BorderThickness="2"
+                BorderBrush="#bdbdbe"
+                CornerRadius="15">
+            
+        </Border>
+        
+        
+        
+
+        <TextBlock TextWrapping="Wrap"
+                   FontSize="16" 
+                   Background="#272B2F" 
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center" 
+                   TextAlignment="Center"
+                   Margin="20,20,20,20"
+                   Style="{StaticResource TextQuiz_Style}">
+            
+            <Run Text="Are you sure you want to delete"/>
+            <LineBreak />
+            <Run x:Name ="RunTextBlock"  FontStyle="Italic"/>
+            
+
+        </TextBlock>
+        
+        
+        
+        
+        
+        <StackPanel Orientation="Horizontal" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Bottom"
+                    Margin="0,20,0,0">
+
+
+            <Button Width="100" 
+                    Margin="10"
+                    Click="YesButton_Click" 
+                    Style="{StaticResource AddSaveBtnStyle}"
+                    Foreground="#bdbdbe">
+
+                <Grid>
+                    <TextBlock Text="Yes"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               FontSize="14"
+                               Style="{StaticResource TextQuiz_Style}">
+                    </TextBlock>
+                </Grid>
+
+            </Button>
+
+
+            <Button  Width="100" 
+                     Margin="10" 
+                     Click="NoButton_Click"
+                     Style="{StaticResource AddSaveBtnStyle}"
+                     Foreground="#bdbdbe">
+
+
+                <TextBlock Text="No"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           FontSize="14"
+                           Style="{StaticResource TextQuiz_Style}">
+                </TextBlock>
+
+
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>

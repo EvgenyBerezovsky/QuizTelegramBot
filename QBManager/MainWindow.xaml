@@ -1,0 +1,187 @@
+﻿<Window x:Class="QBManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:QBManager.ViewModel"
+        xmlns:Menu="clr-namespace:QBManager.Utilities"
+        mc:Ignorable="d"
+        Title="MainWindow"
+        Height="600"
+        Width="850"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        Background="Transparent">
+
+    <Window.DataContext>
+        <vm:NavigationVM />
+    </Window.DataContext>
+
+
+    <Grid>
+
+        <!--// Window Border //-->
+
+        <Border Background="#212529"
+                CornerRadius="20" />
+
+        <Grid>
+
+            <!--// Base Grid //-->
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="228" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!--// Navigation Panel //-->
+
+            <Grid HorizontalAlignment="Left"
+                  Width="228">
+
+                <Border Background="#272B2F"
+                        CornerRadius="20,0,0,20" />
+
+                <StackPanel Height="400"
+                            Width="228">
+
+                    <!--// Home //-->
+
+                    <Menu:StartStopBtn Style="{StaticResource BtnStartStopStyle}"
+                                       
+                                       Command="{Binding RelativeSource={RelativeSource Self}, Path=ToggleCommand}">
+
+                        <Grid>
+
+                            <Image Source="Images/img_homeTest.png"
+                                   Style="{StaticResource Image_Style}" />
+
+                            <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type Menu:StartStopBtn}}, Path=ButtonText}"  
+                                       Style="{StaticResource Text_Style}" />
+
+                        </Grid>
+
+                    </Menu:StartStopBtn>
+
+                    <!--// Quizzes //-->
+
+                    <Menu:Btn Style="{StaticResource BtnStyle}"
+                              Command="{Binding QuizzesCommand}">
+
+                        <Grid>
+
+                            <Image Source="Images/img_quiz.png"
+                                   Style="{StaticResource Image_Style}" />
+
+                            <TextBlock Text="Quizzes"
+                                       Style="{StaticResource Text_Style}" />
+
+                        </Grid>
+
+                    </Menu:Btn>
+
+                    <!--// AddNewQuizzes //-->
+
+                    <Menu:Btn Style="{StaticResource BtnStyle}"
+                              Command="{Binding AddNewQuizCommand}">
+
+                        <Grid>
+
+                            <Image Source="Images/img_addQuiz.png"
+                                   Style="{StaticResource Image_Style}" />
+
+                            <TextBlock Text="Add new quiz"
+                                       Style="{StaticResource Text_Style}" />
+
+                        </Grid>
+
+                    </Menu:Btn>
+
+                    <!--// Students //-->
+
+                    <Menu:Btn Style="{StaticResource BtnStyle}"
+                              Command="{Binding StudentsCommand}">
+
+                        <Grid>
+
+                            <Image Source="Images/img_student.png"
+                                   Style="{StaticResource Image_Style}" />
+
+                            <TextBlock Text="Students"
+                                       Style="{StaticResource Text_Style}" />
+
+                        </Grid>
+
+                    </Menu:Btn>
+
+                    <!--// Transactions //--><!--
+
+                    <Menu:Btn Style="{StaticResource BtnStyle}"
+                              Command="{Binding TransactionsCommand}">
+
+                        <Grid>
+
+                            <Image Source="Images/img_transaction.png"
+                                   Style="{StaticResource Image_Style}" />
+
+                            <TextBlock Text="Transactions"
+                                       Style="{StaticResource Text_Style}" />
+
+                        </Grid>
+
+                    </Menu:Btn>
+
+                    --><!--// Shipments //--><!--
+
+                    <Menu:Btn Style="{StaticResource BtnStyle}"
+                              Command="{Binding ShipmentsCommand}">
+
+                        <Grid>
+
+                            <Image Source="Images/img_shipment.png"
+                                   Style="{StaticResource Image_Style}" />
+
+                            <TextBlock Text="Shipments"
+                                       Style="{StaticResource Text_Style}" />
+
+                        </Grid>
+
+                    </Menu:Btn>
+
+                    --><!--// Settings //--><!--
+
+                    <Menu:Btn Style="{StaticResource BtnStyle}"
+                              Command="{Binding SettingsCommand}">
+
+                        <Grid>
+
+                            <Image Source="Images/img_setting.png"
+                                   Style="{StaticResource Image_Style}" />
+
+                            <TextBlock Text="Settings"
+                                       Style="{StaticResource Text_Style}" />
+
+                        </Grid>
+
+                    </Menu:Btn>-->
+
+                </StackPanel>
+
+            </Grid>
+
+            <Grid Grid.Column="1" >
+
+                <ContentControl x:Name="Pages"
+                                Content="{Binding CurrentView}" />
+
+            </Grid>
+
+        </Grid>
+
+        <Button x:Name="CloseApp"
+                Style="{StaticResource ExitApp}"
+                Click="CloseApp_Click" />
+
+    </Grid>
+</Window>

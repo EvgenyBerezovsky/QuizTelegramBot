@@ -49,6 +49,38 @@ namespace QuizBot_3._0.Infrastructure.DbDataService
             }
         }
 
+        public void CleanUserData(Entities.User selectedUser)
+        {
+            var user = Users.Select(u => u).Where(u => u.UserName == selectedUser.UserName).FirstOrDefault();
+            selectedUser.Scores.Clear();
+            if (user == null)
+            {
+                return;
+            }
+            else
+            {
+                user.Scores.Clear();
+            }
+            using (var context = new DbDataServiceContext())
+            {
+                
+                var userModel = context
+                    .Users
+                    .Include(u => u.Scores)
+                    .Where(u => u.UserName == selectedUser.UserName)
+                    .FirstOrDefault();
+                if (userModel == null)
+                {
+                    return;
+                }
+                else
+                {
+                    userModel.Scores = new List<Models.Score>();
+                }
+                context.SaveChanges();
+            }
+        }
+
         public void CleanUsersData()
         {
             foreach (var user in Users)
@@ -73,7 +105,7 @@ namespace QuizBot_3._0.Infrastructure.DbDataService
             Quizzes.Remove(quiz);
             using (var context = new DbDataServiceContext())
             {
-                var quizToRemove = context.Quizzes.Select(q => q).Where(q => q.Topic == quiz.Topic).First();
+                var quizToRemove = context.Quizzes.Select(q => q).Where(q => q.Topic == quiz.Topic).FirstOrDefault();
                 context.Quizzes.Remove(quizToRemove);
                 context.SaveChanges();
             }
@@ -99,9 +131,10 @@ namespace QuizBot_3._0.Infrastructure.DbDataService
                 Models.Quiz quizModel = new Models.Quiz();
                 quizModel.Topic = quiz.Topic;
 
+
                 if (context.Quizzes.Select(q => q).Where(q => q.Topic == quiz.Topic).FirstOrDefault() != null)
                 {
-                    return;
+                    context.Quizzes.Remove(context.Quizzes.Select(q => q).Where(q => q.Topic == quiz.Topic).FirstOrDefault());  
                 }
 
                 quizModel.IsActive = quiz.IsActive;

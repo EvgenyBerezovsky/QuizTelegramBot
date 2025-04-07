@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizBot_1.0", "QuizBot_1.0\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizBot_2.0", "QuizBot_2.0\QuizBot_2.0.csproj", "{5B677585-A471-4587-BAA5-3075A7FA30FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuizBot_3.0", "QuizBot_3.0\QuizBot_3.0.csproj", "{C0E71156-8031-4268-A234-2869F5F056F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizBot_3.0", "QuizBot_3.0\QuizBot_3.0.csproj", "{C0E71156-8031-4268-A234-2869F5F056F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuizMonitor", "QuizMonitor\QuizMonitor.csproj", "{C1A30E42-A2D5-4277-B230-8D1129D9D718}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizMonitor", "QuizMonitor\QuizMonitor.csproj", "{C1A30E42-A2D5-4277-B230-8D1129D9D718}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QBManager", "QBManager\QBManager.csproj", "{EF42C9AC-D747-4894-930C-D2377E7FE970}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{C1A30E42-A2D5-4277-B230-8D1129D9D718}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1A30E42-A2D5-4277-B230-8D1129D9D718}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1A30E42-A2D5-4277-B230-8D1129D9D718}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF42C9AC-D747-4894-930C-D2377E7FE970}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF42C9AC-D747-4894-930C-D2377E7FE970}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF42C9AC-D747-4894-930C-D2377E7FE970}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF42C9AC-D747-4894-930C-D2377E7FE970}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

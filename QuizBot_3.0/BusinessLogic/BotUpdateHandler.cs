@@ -3,6 +3,7 @@
 using QuizBot_3._0.Entities;
 using QuizBot_3._0.Infrastructure.DbDataService;
 using QuizBot_3._0.Infrastructure.XmlDataService;
+using QuizBot_3._0.Interfaces;
 using System.Text;
 using Telegram.Bot.Extensions.KeyboardBuilders;
 using Telegram.Bot.Types;
@@ -24,7 +25,7 @@ namespace QuizBot_3._0.BusinessLogic
         Dictionary<long, int> userCorrectAnswers = new();                // ChatId -> правильные ответы
         Dictionary<long, int> userQuizQuestionState = new();             // ChatId -> текущий вопрос
 
-        DbDataService _dataService;
+        IDataService<Quiz, User> _dataService;
 
         public BotUpdateHandler()
         {
@@ -36,7 +37,7 @@ namespace QuizBot_3._0.BusinessLogic
             menu = null;
             string response = "Невірний ввод.";
 
-            Console.WriteLine(update.Message.From.Id);
+            Console.WriteLine(update.Message.From.Id); // logs
             var message = update.Message;
             var chatId = message.Chat.Id;
 
@@ -278,7 +279,8 @@ namespace QuizBot_3._0.BusinessLogic
             {
                 userChatCurrentState.Add(chatId, ChatCurrentState.StartState);
             }
-            if (userChatCurrentState[chatId] is ChatCurrentState.StartState)
+            userChatCurrentState[chatId] = ChatCurrentState.StartState;
+            if (/*userChatCurrentState[chatId] is ChatCurrentState.StartState*/true)
             {
                 userQuizState.Remove(chatId);
                 userProgressState.Remove(chatId);
@@ -287,7 +289,7 @@ namespace QuizBot_3._0.BusinessLogic
                 if (_dataService.Quizzes == null || _dataService.Quizzes.Count == 0)
                 {
                     menu = null;
-                    response = "<b>✔ Немає доступних вікторін.</b>";
+                    response = "<b>✔ Немає доступних завдань.</b>";
                     return response;
                 }
 
@@ -299,7 +301,7 @@ namespace QuizBot_3._0.BusinessLogic
                         userProgressState.Add(chatId, new User(chatId, userName));
                     }
                     StringBuilder sb = new StringBuilder();
-                    sb.Append("<b>👉 Виберіть вікторину:</b>");
+                    sb.Append("<b>👉 Виберіть завдання:</b>");
                     sb.AppendLine();
                     sb.AppendLine("Вибір завдання за темой. Вибране завдання має бути пройдено повністю. Під час виконання завдання пункти основного меню недоступні.");
                    
@@ -316,7 +318,8 @@ namespace QuizBot_3._0.BusinessLogic
             long chatId = update.Message.Chat.Id;
 
             if (!userChatCurrentState.ContainsKey(chatId)) userChatCurrentState.Add(chatId, ChatCurrentState.StartState);
-            if (userChatCurrentState[chatId] == ChatCurrentState.StartState)
+
+            if (true)
             {
                 userChatCurrentState[chatId] = ChatCurrentState.ResultsProcessState;
                 menu = GetInfoMenu();
@@ -418,7 +421,7 @@ namespace QuizBot_3._0.BusinessLogic
                     userChatCurrentState[chatId] = ChatCurrentState.StartState;
 
 
-                    string notificationMessage = $"📚 У нас є нова вікторина! \n<b> -{quiz.Topic}- </b> \nПеревірте свої знання.";
+                    string notificationMessage = $"📚 У нас є нове завдання! \n<b> -{quiz.Topic}- </b> \nПеревірте свої знання.";
                     var chatIdCollection = _dataService.Users.Where(u => u.ChatId != 0).Select(u => u.ChatId).ToList();
 
                     OnNewQuizCreated(new NewQuizCreatedEventArgs(chatIdCollection, notificationMessage));

@@ -1,0 +1,36 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vm="clr-namespace:QBManager.ViewModel"
+                    xmlns:view="clr-namespace:QBManager.View">
+    
+
+    <DataTemplate DataType="{x:Type vm:HomeVM}">
+        <view:Home />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:QuizVM}">
+        <view:Quizzes />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:NewQuizVM}">
+        <view:AddNewQuizzes />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:StudentVM}">
+        <view:Students />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:TransactionVM}">
+        <view:Transactions />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:ShipmentVM}">
+        <view:Shipments />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:SettingVM}">
+        <view:Settings />
+    </DataTemplate>
+
+</ResourceDictionary>
+

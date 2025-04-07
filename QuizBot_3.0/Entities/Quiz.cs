@@ -4,7 +4,7 @@ namespace QuizBot_3._0.Entities
 {
     public class Quiz
     {
-        public bool IsActive;
+        public bool IsActive { get; set; }
         public string? Topic { get; set; }
         public List<QuestionItem>? Questions { get; set; }
         public Quiz() { }
@@ -13,6 +13,10 @@ namespace QuizBot_3._0.Entities
             IsActive = true;
             Topic = topic;
             Questions = questions;
+        }
+        public override string ToString()
+        {
+            return this.Topic.ToString();
         }
     }
 }

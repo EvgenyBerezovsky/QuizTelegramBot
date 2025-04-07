@@ -21,7 +21,7 @@ namespace QuizBot_3._0.Infrastructure.DbDataService.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=botData.db");
+            optionsBuilder.UseSqlite("Data Source=D:\\ITVDN\\SmartTest\\QuizBot\\QuizBot_3.0\\bin\\Debug\\net7.0\\botData.db");
             optionsBuilder.LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted});
         }
 

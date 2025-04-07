@@ -27,6 +27,7 @@ D:\ITVDN\SmartTest\QuizBot\QuizBot_3.0\bin\Release\net7.0\SQLitePCLRaw.core.dll
 D:\ITVDN\SmartTest\QuizBot\QuizBot_3.0\bin\Release\net7.0\SQLitePCLRaw.provider.e_sqlite3.dll
 D:\ITVDN\SmartTest\QuizBot\QuizBot_3.0\bin\Release\net7.0\System.CodeDom.dll
 D:\ITVDN\SmartTest\QuizBot\QuizBot_3.0\bin\Release\net7.0\Telegram.Bot.dll
+D:\ITVDN\SmartTest\QuizBot\QuizBot_3.0\bin\Release\net7.0\Telegram.Bot.Extensions.KeyboardBuilders.dll
 D:\ITVDN\SmartTest\QuizBot\QuizBot_3.0\bin\Release\net7.0\runtimes\alpine-arm\native\libe_sqlite3.so
 D:\ITVDN\SmartTest\QuizBot\QuizBot_3.0\bin\Release\net7.0\runtimes\alpine-arm64\native\libe_sqlite3.so
 D:\ITVDN\SmartTest\QuizBot\QuizBot_3.0\bin\Release\net7.0\runtimes\alpine-x64\native\libe_sqlite3.so
@@ -60,4 +61,3 @@ D:\ITVDN\SmartTest\QuizBot\QuizBot_3.0\obj\Release\net7.0\refint\QuizBot_3.0.dll
 D:\ITVDN\SmartTest\QuizBot\QuizBot_3.0\obj\Release\net7.0\QuizBot_3.0.pdb
 D:\ITVDN\SmartTest\QuizBot\QuizBot_3.0\obj\Release\net7.0\QuizBot_3.0.genruntimeconfig.cache
 D:\ITVDN\SmartTest\QuizBot\QuizBot_3.0\obj\Release\net7.0\ref\QuizBot_3.0.dll
-D:\ITVDN\SmartTest\QuizBot\QuizBot_3.0\bin\Release\net7.0\Telegram.Bot.Extensions.KeyboardBuilders.dll

@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup />
+  <ItemGroup>
+    <ApplicationDefinition Update="App.xaml">
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="View\AddQuizWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\ConfirmDeleteWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\Quizzes.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\Home.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\Students.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\AddNewQuizzes.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\Settings.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\Shipments.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\Transactions.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Utilities\DataTemplate.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\AddQuizWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\ConfirmDeleteWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Quizzes.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Home.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Students.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\AddNewQuizzes.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Settings.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Shipments.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Transactions.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+</Project>

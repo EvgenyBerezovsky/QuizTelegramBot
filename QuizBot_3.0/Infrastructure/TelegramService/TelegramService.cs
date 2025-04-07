@@ -9,7 +9,7 @@ namespace QuizBot_3._0.Infrastructure.TelegramService
 {
     public class TelegramService : ITelegramService<QuestionItem>
     {
-        private string imagePath = @"D:\ITVDN\SmartTest\QuizBot\QuizBot_1.0\bin\Debug\net7.0\Data\botImage.jpg";
+        //private string imagePath = @"D:\ITVDN\SmartTest\QuizBot\QuizBot_1.0\bin\Debug\net7.0\Data\botImage.jpg";
 
         private readonly TelegramBotClient _bot;
 
@@ -37,6 +37,7 @@ namespace QuizBot_3._0.Infrastructure.TelegramService
 
 
             if (text == null || text == string.Empty) text = "Wrong input.";
+
             await _bot.SendTextMessageAsync(chatId: chatId, text: text, replyMarkup: replyMarkup, parseMode: ParseMode.Html);
 
             if (poll != null)

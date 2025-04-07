@@ -5,8 +5,8 @@ namespace QuizBot_3._0.Entities
     public class QuestionItem
     {
         public string? Answer { get; set; }
-        public int CorrectOptionIndex { get; set; }
         public string? Question { get; set; }
+        public int CorrectOptionIndex { get; set; }
         public string[] Options { get; set; } = new string[4];
 
         public QuestionItem()
@@ -18,6 +18,14 @@ namespace QuizBot_3._0.Entities
             Options = options;
             Question = question;
             CorrectOptionIndex = correctOption;
+        }
+        public override string ToString()
+        {
+            if (Question != null)
+            {
+                return Question.ToString();
+            }
+            else return string.Empty;
         }
     }
 }
