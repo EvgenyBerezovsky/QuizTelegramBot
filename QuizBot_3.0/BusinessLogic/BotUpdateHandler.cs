@@ -196,12 +196,12 @@ namespace QuizBot_3._0.BusinessLogic
         }
         private InlineKeyboardMarkup GetQuizToPassMenu()
         {
-            var kb = new InlineKeyboardButton[_dataService.Quizzes.Count][];
+            var kb = new InlineKeyboardButton[_dataService.AccessibleQuizzes.Count][];
 
-            for (int i = 0; i < _dataService.Quizzes.Count; i++)
+            for (int i = 0; i < _dataService.AccessibleQuizzes.Count; i++)
             {
                 string callbackData = string.Concat("StartQuiz", i);
-                string button = string.Concat("📌 ", _dataService.Quizzes[i].Topic);
+                string button = string.Concat("📌 ", _dataService.AccessibleQuizzes[i].Topic);
                 kb[i] = new InlineKeyboardButton[1];
                 kb[i][0] = InlineKeyboardButton.WithCallbackData(button, callbackData);
             }
@@ -286,7 +286,7 @@ namespace QuizBot_3._0.BusinessLogic
                 userProgressState.Remove(chatId);
                 userCreateQuizState.Remove(chatId);
 
-                if (_dataService.Quizzes == null || _dataService.Quizzes.Count == 0)
+                if (_dataService.AccessibleQuizzes == null || _dataService.AccessibleQuizzes.Count == 0)
                 {
                     menu = null;
                     response = "<b>✔ Немає доступних завдань.</b>";
@@ -415,6 +415,7 @@ namespace QuizBot_3._0.BusinessLogic
                     quiz.Topic = state.Title;
                     quiz.Questions = state.Questions;
                     quiz.IsActive = true;
+                    quiz.IsPublished = true;
                     _dataService.SaveNewQuiz(quiz);
 
                     userCreateQuizState.Remove(chatId);
@@ -557,7 +558,7 @@ namespace QuizBot_3._0.BusinessLogic
             int.TryParse(message.Replace("startquiz", string.Empty), out int quizIndex);
 
             userChatCurrentState[chatId] = ChatCurrentState.QuizPassingState; // устанавливаем текущее состояние чата  
-            userQuizState[chatId] = _dataService.Quizzes[quizIndex];          // устанавливаем текущую викторину для текущего чата
+            userQuizState[chatId] = _dataService.AccessibleQuizzes[quizIndex];          // устанавливаем текущую викторину для текущего чата
             userQuizQuestionState[chatId] = 0;                                // Устанавливаем начальный вопрос
             userCorrectAnswers[chatId] = 0;                                   // Сбрасываем счётчик правильных ответов
 

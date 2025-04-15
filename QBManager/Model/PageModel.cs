@@ -19,8 +19,9 @@ namespace QBManager.Model
         public DbDataService dataService { get; set; }
         public Quiz Quiz { get; set; } = new Quiz();
         public ObservableCollection<QuestionItem> Questions { get; set; } = new ObservableCollection<QuestionItem>();
-
         public QuestionItem Question { get; set; } = new QuestionItem();
+        public string TelegramToken { get; set; } = string.Empty;
+
 
 
         public int CustomerCount { get; set; }

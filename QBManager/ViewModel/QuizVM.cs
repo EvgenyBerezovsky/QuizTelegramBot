@@ -5,8 +5,10 @@ using QuizBot_3._0.Entities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection.Metadata;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,11 +16,11 @@ using System.Windows.Input;
 
 namespace QBManager.ViewModel
 {
-    class QuizVM : Utilities.ViewModelBase
+    class QuizVM : Utilities.ViewModelBase, INotifyPropertyChanged
     {
         private readonly PageModel _pageModel;
         private Quiz? _selectedQuiz;
-        private bool _isActive;
+        private bool _isPublished;
         private QuestionItem? _selectedQuestion;
         private ObservableCollection<Quiz> _quizzes = new();
 
@@ -49,19 +51,19 @@ namespace QBManager.ViewModel
                 _selectedQuiz = value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(Questions));
-                OnPropertyChanged(nameof(IsActive));
+                OnPropertyChanged(nameof(IsPublished));
             }
         }
 
-        public bool IsActive
+        public bool IsPublished
         {
-            get => _isActive;
+            get => _isPublished;
             set
             {
-                if (_isActive != value)
+                if (_isPublished != value)
                 {
-                    _isActive = value;
-                    OnPropertyChanged(nameof(IsActive));
+                    _isPublished = value;
+                    OnPropertyChanged(nameof(IsPublished));
                 }
             }
         }
@@ -96,8 +98,17 @@ namespace QBManager.ViewModel
         {
             if (parameter is bool isChecked)
             {
-                // Изменяем свойство модели
-                IsActive = isChecked;
+                
+                IsPublished = isChecked;
+                if (SelectedQuiz != null) 
+                {
+                    SelectedQuiz.IsActive = isChecked;
+                    _pageModel.dataService.SaveNewQuiz(SelectedQuiz);
+                }
+                
+                OnPropertyChanged(nameof(SelectedQuiz));
+                OnPropertyChanged(nameof(IsPublished));
+                OnPropertyChanged(nameof(Quizzes));
             }
         });
 
@@ -116,7 +127,7 @@ namespace QBManager.ViewModel
                 Quiz quizToRemove = new Quiz()
                 {
                     Topic = SelectedQuiz.Topic,
-                    IsActive = SelectedQuiz.IsActive,
+                    IsPublished = SelectedQuiz.IsPublished,
                     Questions = SelectedQuiz.Questions,
                 };
 
@@ -139,7 +150,7 @@ namespace QBManager.ViewModel
             Quiz oldQuiz = new Quiz()
             {
                 Topic = SelectedQuiz.Topic,
-                IsActive = SelectedQuiz.IsActive,
+                IsPublished = SelectedQuiz.IsPublished,
                 Questions = SelectedQuiz.Questions,
             };
 
@@ -171,7 +182,7 @@ namespace QBManager.ViewModel
         {
             if (SelectedQuiz != null)
             {
-                SelectedQuiz.IsActive = !SelectedQuiz.IsActive;
+                SelectedQuiz.IsPublished = !SelectedQuiz.IsPublished;
                 OnPropertyChanged(nameof(Quizzes));
             }
         }
@@ -224,6 +235,11 @@ namespace QBManager.ViewModel
             OnPropertyChanged(nameof(SelectedQuiz));
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
 
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

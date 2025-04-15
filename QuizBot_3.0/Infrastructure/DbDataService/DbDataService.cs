@@ -20,6 +20,10 @@ namespace QuizBot_3._0.Infrastructure.DbDataService
             Quizzes = GetAllQuizzesFromDb();
         }
         public List<Entities.Quiz> Quizzes { get; set; }
+        public List<Entities.Quiz> AccessibleQuizzes
+        {
+            get { return Quizzes.Where(q => q.IsPublished == true).ToList(); }
+        }
         public List<Entities.User> Users { get; set; }
 
         public void AddNewUserOrUpdate(Entities.User newUser)
@@ -63,7 +67,7 @@ namespace QuizBot_3._0.Infrastructure.DbDataService
             }
             using (var context = new DbDataServiceContext())
             {
-                
+
                 var userModel = context
                     .Users
                     .Include(u => u.Scores)
@@ -134,11 +138,11 @@ namespace QuizBot_3._0.Infrastructure.DbDataService
 
                 if (context.Quizzes.Select(q => q).Where(q => q.Topic == quiz.Topic).FirstOrDefault() != null)
                 {
-                    context.Quizzes.Remove(context.Quizzes.Select(q => q).Where(q => q.Topic == quiz.Topic).FirstOrDefault());  
+                    context.Quizzes.Remove(context.Quizzes.Select(q => q).Where(q => q.Topic == quiz.Topic).FirstOrDefault());
                 }
 
                 quizModel.IsActive = quiz.IsActive;
-                quizModel.IsPublished = true;
+                quizModel.IsPublished = quiz.IsPublished;
 
                 List<Models.QuestionItem> questionItems = new List<Models.QuestionItem>();
                 List<Models.Options> optionsCollection = new List<Models.Options>();
@@ -422,6 +426,7 @@ namespace QuizBot_3._0.Infrastructure.DbDataService
                     Entities.Quiz quiz = new Entities.Quiz();
 
                     quiz.IsActive = quizModel.IsActive;
+                    quiz.IsPublished = quizModel.IsPublished;
                     quiz.Topic = quizModel.Topic;
                     quiz.Questions = new List<QuestionItem>();
                     foreach (var question in quizModel.Questions)

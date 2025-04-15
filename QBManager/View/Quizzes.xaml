@@ -94,8 +94,8 @@
                                 <CheckBox Grid.Column="0"
                                               VerticalAlignment="Center"
                                               HorizontalAlignment="Center"
-                                              IsChecked="{Binding IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                              Command="{Binding ChangeCheckedCommand}"
+                                              IsChecked="{Binding IsPublished, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                              Command="{Binding DataContext.ChangeCheckedCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
                                               CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"/>
                                 <TextBlock Grid.Column="1"
                                                HorizontalAlignment="Left"

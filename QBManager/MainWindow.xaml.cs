@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QBManager.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -29,61 +30,11 @@ namespace QBManager
 
         private void CloseApp_Click(object sender, RoutedEventArgs e)
         {
-            StopApplication();
+            if (DataContext is NavigationVM viewModel)
+            {
+                viewModel.StopBot();
+            }
             Close();
-        }
-
-        public void StartApplication()
-        {
-            try
-            {
-                // Получение текущей директории сборки
-                string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
-
-                // Указание имени вашего консольного приложения
-                string consoleAppPath = System.IO.Path.Combine(currentDirectory, "QuizBot_3.0.exe");
-
-                // Проверка существования файла
-                if (!System.IO.File.Exists(consoleAppPath))
-                {
-                    MessageBox.Show($"Приложение {consoleAppPath} не найдено!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-
-                // Запуск консольного приложения
-                RunningProcess = new Process
-                {
-                    StartInfo = new ProcessStartInfo
-                    {
-                        FileName = consoleAppPath,
-                        UseShellExecute = true
-                    }
-                };
-
-                RunningProcess.Start();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка при запуске приложения: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        // Метод для остановки приложения
-        public void StopApplication()
-        {
-            try
-            {
-                if (RunningProcess != null && !RunningProcess.HasExited)
-                {
-                    RunningProcess.Kill();
-                    RunningProcess.Dispose();
-                    RunningProcess = null;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка при остановке приложения: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
         }
     }
 }

@@ -12,7 +12,7 @@ namespace QuizBot_3._0.Interfaces
     public interface ITelegramService<T>
     {
         public Task<Update[]> GetUpdatesAsync(long offset);
-        public Task SendMessageAsync(long chatId, string text, T poll = default(T), IReplyMarkup? replyMarkup = null);
+        public Task SendMessageAsync(long chatId, string text, T? poll = default(T), IReplyMarkup? replyMarkup = null);
         public Task AnswerCallbackQueryAsync(string callbackQueryId);
     }
 }

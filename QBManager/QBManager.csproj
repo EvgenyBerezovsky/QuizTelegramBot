@@ -18,12 +18,12 @@
     <None Remove="Images\img_addQuiz.png" />
     <None Remove="Images\img_customer.png" />
     <None Remove="Images\img_home.png" />
-    <None Remove="Images\img_homeTest.png" />
     <None Remove="Images\img_order.png" />
     <None Remove="Images\img_product.png" />
     <None Remove="Images\img_quiz.png" />
     <None Remove="Images\img_setting.png" />
     <None Remove="Images\img_shipment.png" />
+    <None Remove="Images\img_startStopBut.png" />
     <None Remove="Images\img_student.png" />
     <None Remove="Images\img_transaction.png" />
     <None Remove="Images\order_page.png" />
@@ -60,7 +60,7 @@
     <Resource Include="Images\img_home.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\img_homeTest.png" />
+    <Resource Include="Images\img_startStopBut.png" />
     <Resource Include="Images\img_product.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

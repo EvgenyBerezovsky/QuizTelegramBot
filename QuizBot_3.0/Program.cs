@@ -7,12 +7,12 @@ using QuizBot_3._0.Infrastructure.DbDataService.Models;
 using QuizBot_3._0.Infrastructure.TelegramService;
 using System;
 
-internal class Program
+internal static class Program
 {
 
     #region token
     // Створюємо змінну, що буде зберігати налаштування на наш бот
-    private const string TelegramToken = "7968088181:AAGU_X_pe7wVm49h4BhfD6m3U_hUwtbUWB0";
+    
     #endregion
     static async Task Main(string[] args)
     {
@@ -21,13 +21,25 @@ internal class Program
         Console.InputEncoding = System.Text.Encoding.UTF8;
         #endregion
 
+        //string telegramToken = "7968088181:AAGU_X_pe7wVm49h4BhfD6m3U_hUwtbUWB0";
+
+        // Получение токена из аргументов
+        string telegramToken = args[0];
+
         var botUpdateHandler = new BotUpdateHandler();
-        var telegramService = new TelegramService(TelegramToken);
+        var telegramService = new TelegramService(telegramToken);
         var cancellationTokenSource = new CancellationTokenSource();
 
         Console.WriteLine("Bot started...");
-        var botRunner = new BotRunner(telegramService, botUpdateHandler, cancellationTokenSource.Token);
-        await botRunner.Run();
+        try
+        {
+            var botRunner = new BotRunner(telegramService, botUpdateHandler, cancellationTokenSource.Token);
+            await botRunner.Run();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Критическая ошибка: {ex.Message}");
+        }
 
         Console.ReadLine();
 

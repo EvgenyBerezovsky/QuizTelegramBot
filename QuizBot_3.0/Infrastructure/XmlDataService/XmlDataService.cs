@@ -59,6 +59,11 @@ namespace QuizBot_3._0.Infrastructure.XmlDataService
 
         public List<User>? Users { get { return userSet.Users; } set { userSet.Users = value; } }
         public List<Quiz>? Quizzes { get { return quizSet.Quizzes; } set { quizSet.Quizzes = value; } }
+
+        public List<Entities.Quiz> AccessibleQuizzes
+        {
+            get { return Quizzes.Where(q => q.IsPublished == true).ToList(); }
+        }
         public XmlDataService()
         {
             usersXmlFilePath = GetFilePath(UsersXmlFileName);

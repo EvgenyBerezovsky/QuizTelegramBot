@@ -48,21 +48,21 @@
 
                     <!--// Home //-->
 
-                    <Menu:StartStopBtn Style="{StaticResource BtnStartStopStyle}"
-                                       
-                                       Command="{Binding RelativeSource={RelativeSource Self}, Path=ToggleCommand}">
 
+
+                    <Menu:Btn Style="{StaticResource BtnStyle}"
+                                       Command="{Binding ToggleBotCommand}">
                         <Grid>
 
-                            <Image Source="Images/img_homeTest.png"
+                            <Image Source="Images/img_startStopBut.png"
                                    Style="{StaticResource Image_Style}" />
 
-                            <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type Menu:StartStopBtn}}, Path=ButtonText}"  
+                            <TextBlock Text="{Binding StartStopButtonText}"  
                                        Style="{StaticResource Text_Style}" />
 
                         </Grid>
 
-                    </Menu:StartStopBtn>
+                    </Menu:Btn>
 
                     <!--// Quizzes //-->
 
@@ -114,6 +114,25 @@
                         </Grid>
 
                     </Menu:Btn>
+
+                    <Menu:Btn Style="{StaticResource BtnStyle}"
+                              Command="{Binding SettingsCommand}">
+
+                        <Grid>
+
+                            <Image Source="Images/img_setting.png"
+                                   Style="{StaticResource Image_Style}" />
+
+                            <TextBlock Text="Settings"
+                                       Style="{StaticResource Text_Style}" />
+
+                        </Grid>
+
+                    </Menu:Btn>
+
+
+
+
 
                     <!--// Transactions //--><!--
 

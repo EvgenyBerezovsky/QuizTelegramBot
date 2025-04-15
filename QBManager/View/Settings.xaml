@@ -22,29 +22,61 @@
             </Border.Background>
         </Border>
 
-        <TextBlock Foreground="#CED565"
-                   FontSize="12"
-                   TextAlignment="Center"
-                   HorizontalAlignment="Right"
-                   VerticalAlignment="Top"
-                   FontFamily="/Fonts/#Rubik Medium"
-                   Margin="0,270,223,0">
+       
+        <Grid Margin="20, 120, 20 , 20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
 
-            <TextBlock.Style>
-                <Style TargetType="{x:Type TextBlock}">
-                    <Setter Property="Text"
-                            Value="OFF" />
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding Settings}"
-                                     Value="True">
-                            <Setter Property="Text"
-                                    Value="ON" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </TextBlock.Style>
+                <RowDefinition Height="10"/>
 
-        </TextBlock>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
+            <TextBlock Grid.Row="0" 
+                       Text="Telegram bot token:" 
+                       VerticalAlignment="Center"
+                       Foreground="#bdbdbe"
+                       FontSize="16" 
+                       Margin="0,5,0,2" />
+
+
+            <Border Grid.Row="2" 
+                    BorderBrush="#bdbdbe"
+                    BorderThickness="2">
+
+                <TextBox  Grid.Row="2"  
+                          TextWrapping="Wrap"
+                          Text="{Binding TelegramToken}"
+                          VerticalAlignment="Center"
+                          FontSize="16"
+                          Padding="0,5,5,0"
+                          Margin="5,5,5,5"/>
+            </Border>
+
+            <Button Grid.Row="4"
+                    Foreground="#bdbdbe"
+                    Command="{Binding SaveTokenCommand}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Margin="0, 10, 0, 0"
+                    Style="{StaticResource AddSaveBtnStyle}">
+
+
+                <Grid>
+                    <TextBlock Text="Save token"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               FontSize="14"
+                               Style="{StaticResource TextQuiz_Style}">
+
+                    </TextBlock>
+                </Grid>
+            </Button>
+
+        </Grid>
+
+        
     </Grid>
 </UserControl>
