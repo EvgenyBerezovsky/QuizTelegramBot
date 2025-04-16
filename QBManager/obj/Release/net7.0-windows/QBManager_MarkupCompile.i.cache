@@ -11,10 +11,10 @@ false
 TRACE;RELEASE;NET;NET7_0;NETCOREAPP
 D:\ITVDN\SmartTest\QuizBot\QBManager\App.xaml
 151194058541
-
-27-331092569
+11395860793
+281281215959
 2201325058481
 MainWindow.xaml;Styles\Button.xaml;Styles\Image.xaml;Styles\Page.xaml;Styles\Text.xaml;Utilities\DataTemplate.xaml;View\AddNewQuizzes.xaml;View\AddQuizWindow.xaml;View\ConfirmDeleteWindow.xaml;View\Home.xaml;View\Quizzes.xaml;View\Settings.xaml;View\Shipments.xaml;View\Students.xaml;View\Transactions.xaml;
 
-True
+False
 

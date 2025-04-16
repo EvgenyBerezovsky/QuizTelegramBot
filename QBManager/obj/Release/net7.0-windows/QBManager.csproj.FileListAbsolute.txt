@@ -93,3 +93,6 @@ D:\ITVDN\SmartTest\QuizBot\QBManager\obj\Release\net7.0-windows\refint\QBManager
 D:\ITVDN\SmartTest\QuizBot\QBManager\obj\Release\net7.0-windows\QBManager.pdb
 D:\ITVDN\SmartTest\QuizBot\QBManager\obj\Release\net7.0-windows\QBManager.genruntimeconfig.cache
 D:\ITVDN\SmartTest\QuizBot\QBManager\obj\Release\net7.0-windows\ref\QBManager.dll
+D:\ITVDN\SmartTest\QuizBot\QBManager\obj\Release\net7.0-windows\QBManager_Content.g.cs
+D:\ITVDN\SmartTest\QuizBot\QBManager\obj\Release\net7.0-windows\QBManager.Properties.Resources.resources
+D:\ITVDN\SmartTest\QuizBot\QBManager\obj\Release\net7.0-windows\QBManager.csproj.GenerateResource.cache

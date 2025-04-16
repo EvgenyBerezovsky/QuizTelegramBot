@@ -6,11 +6,13 @@
     <RootNamespace>QBManager</RootNamespace>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Images\Icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Fonts\Rubik-Medium.ttf" />
     <None Remove="Fonts\Rubik-Regular.ttf" />
+    <None Remove="Icon.ico" />
     <None Remove="Images\addNewQuiz_page.png" />
     <None Remove="Images\customer_page.png" />
     <None Remove="Images\homeTuch_page.png" />
@@ -35,6 +37,10 @@
     <None Remove="Images\shutdown_mo.png" />
     <None Remove="Images\student_page.png" />
     <None Remove="Images\transaction_page.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\Icon.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -92,6 +98,21 @@
     <Resource Include="Images\transaction_page.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

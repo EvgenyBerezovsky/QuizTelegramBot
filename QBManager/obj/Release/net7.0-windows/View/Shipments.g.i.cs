@@ -53,7 +53,7 @@ namespace QBManager.View {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/QBManager;component/view/shipments.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/QBManager;V1.0.0.0;component/view/shipments.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\View\Shipments.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
